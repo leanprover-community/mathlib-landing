@@ -1,0 +1,62 @@
+- title: Community
+  items:
+    - Zulip chat: https://leanprover.zulipchat.com/
+    - GitHub: https://github.com/leanprover-community/mathlib4
+    - Blog: https://leanprover-community.github.io/blog
+    - Community information: meet.html
+    - Community guidelines: community_guidelines.html
+    - Teams: teams.html
+    - Papers about Lean: papers.html
+    - Citing mathlib: cite.html
+    - Licence: cite.html#Licence
+    - Projects using Lean: lean_projects.html
+    - Teaching using Lean: teaching/index.html
+    - Events: events.html
+
+- title: Use Lean
+  items:
+    - Online version (no installation): https://live.lean-lang.org/
+    - Install Lean: https://docs.lean-lang.org/lean4/doc/quickstart.html
+    - More options: get_started.html
+
+- title: Documentation
+  items:
+    - Learning resources (start here): learn.html
+    - Documentation overview: documentation.html
+    - API documentation: https://leanprover-community.github.io/mathlib4_docs
+    - Declaration search (Loogle): https://loogle.lean-lang.org/
+    - Language reference: https://lean-lang.org/doc/reference/latest/
+    - Tactic list: https://leanprover-community.github.io/mathlib4_docs/tactics.html
+    - Glossary: glossary.html
+    - Did you really prove it?: did_you_prove_it.html
+    - About MWEs: mwe.html
+
+- title: Library overviews
+  items:
+    - Library overview: mathlib-overview.html
+    - Undergraduate maths: undergrad.html
+    - Wiedijk's 100 theorems: 100.html
+    - 1000+ theorems: 1000.html
+
+- title: Theories
+  items:
+    - Natural Numbers: theories/naturals.html
+    - Linear Algebra: theories/linear_algebra.html
+    - Sets and finite sets: theories/sets.html
+    - Topology: theories/topology.html
+    - Category Theory: theories/category_theory.html
+
+- title: Contributing
+  items:
+    - What to contribute: contribute/index.html
+    - How to contribute: contribute/how-to-contribute.html
+    - Mathlib's Values: contribute/values.html
+    - Mathlib review and triage dashboard: https://leanprover-community.github.io/queueboard/
+    - Git Guide for Mathlib4 Contributors: contribute/git.html
+    - Naming conventions: contribute/naming.html
+    - Code style guideline: contribute/style.html
+    - Documentation style: contribute/doc.html
+    - Commit conventions: contribute/commit.html
+    - Pull request review guide: contribute/pr-review.html
+    - Contribution statistics: mathlib_stats.html
+    - Tags and branches: contribute/tags_and_branches.html

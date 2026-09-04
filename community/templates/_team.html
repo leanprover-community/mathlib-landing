@@ -1,0 +1,42 @@
+{% extends '_base.html' %}
+{% block title %}{{ team.name }}{% endblock %}
+{% block content %}
+       <h1>{{ team.name }}</h1>
+       <div>
+       {{ team.description | md }}
+       </div>
+
+       <h3>Members</h3>
+       {% if team.use_biography %}
+         <div class="row mt-5">
+         {% for member in team.members %}
+		<div class="col-md-6">
+			<div class="media mb-3">
+				<img src="/img/{{ member.img }}" class="mr-3" alt="{{member.name}} picture" style="width: 100px; height: 100px;">
+				<div class="media-body">
+					<h5 class="mt-0">{{ member.name }}</h5>
+					<p>{{ member.descr }}</p>
+				</div>
+			</div>
+		</div>
+         {% endfor %}
+         </div>
+      {% else %}
+        <ul>
+        {% for member in team.members %}
+          <li>
+            {{- member.name }} (<a href="https://github.com/{{ member.github }}"><code>@{{ member.github }}</code></a>)
+            {%- if reviewer_data is defined and member.github and member.github in reviewer_data -%}
+              {%- set rd = reviewer_data[member.github] -%}
+              {%- for label in rd.preferred_labels %}
+                <span class="badge badge-secondary ml-1">{{ label }}</span>
+              {%- endfor %}
+              {%- if rd.free_form %}
+                <div class="small text-muted reviewer-freeform">{{ rd.free_form | md }}</div>
+              {%- endif %}
+            {%- endif %}
+          </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+{% endblock %}
