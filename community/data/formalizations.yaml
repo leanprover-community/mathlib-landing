@@ -1,0 +1,116 @@
+- 
+  title: The cap-set problem
+  authors: Dahmen, Hölzl and Lewis
+  abstract: |
+            In 2016, Ellenberg and Gijswijt established a new upper bound on
+            the size of subsets of $𝔽^n_q$ with no three-term arithmetic
+            progression. This problem has received much mathematical attention,
+            particularly in the case $q = 3$, where it is commonly known as the
+            cap set problem. Ellenberg and Gijswijt's proof was published in
+            the Annals of Mathematics and is noteworthy for its clever use of
+            elementary methods.
+  url: https://lean-forward.github.io/e-g/
+  organization: lean-forward
+  repo: cap_set_problem
+-
+  title: Perfectoid spaces
+  authors: Buzzard, Commelin and Massot
+  abstract: |
+            Perfectoid spaces are sophisticated objects in arithmetic
+            geometry introduced by Peter Scholze in 2012. We formalised enough
+            definitions and theorems in topology, algebra and geometry to
+            define perfectoid spaces in the Lean theorem prover. This
+            experiment confirms that a proof assistant can handle complexity in
+            that direction, which is rather different from formalising a long
+            proof about simple objects.
+  url: https://leanprover-community.github.io/lean-perfectoid-spaces/
+  organization: leanprover-community
+  repo: lean-perfectoid-spaces
+-
+  title: Independence of the continuum hypothesis
+  authors: Han and van Doorn
+  abstract: |
+            The continuum hypothesis states that there is no cardinality between
+            the smallest infinite cardinal and the
+            cardinality of the continuum. It was posed by Cantor in
+            1878 and was the first problem on Hilbert’s list of twenty-
+            three unsolved problems in mathematics. Gödel and Cohen proved this
+            is independent, i.e. neither provable nor disprovable, from ZFC.
+  url: https://flypitch.github.io/
+  organization: flypitch
+  repo: flypitch
+- 
+  title: Data Types as Quotients of Polynomial Functors
+  authors: Avigad, Carneiro and Hudon
+  abstract: |
+            A broad class of data types, including arbitrary nestings of inductive 
+            types, coinductive types, and quotients, can be represented as quotients 
+            of polynomial functors. This provides perspicuous ways of constructing 
+            them and reasoning about them in an interactive theorem prover.
+  url: https://github.com/avigad/qpf
+  organization: avigad
+  repo: qpf
+-
+ title: Liquid Tensor Experiment
+ authors: Commelin, Topaz et al
+ abstract: |
+           Liquid vector spaces are crucial objects in Clausen and Scholze’s
+           condensed mathematics framework blending number theory and
+           functional analysis. The main theorem about them guarantees they have
+           suitable properties to achieve that goal.
+ url: https://leanprover-community.github.io/liquid/
+ organization: leanprover-community
+ repo: lean-liquid
+-
+ title: The sphere eversion
+ authors: Massot, Nash, van Doorn
+ abstract: |
+           Smale’s famous sphere eversion theorem ensures you can turn a sphere
+           inside out in Euclidean 3-space. It is an instance of a much more
+           general flexibility result due to Gromov.
+           Its formalization shows that proof assistants are not limited to
+           algebraic parts of mathematics and can handle differential topology.
+ url: https://leanprover-community.github.io/sphere-eversion/
+ organization: leanprover-community
+ repo: sphere-eversion
+- 
+ title: Fermat’s last theorem for regular primes
+ authors: Best, Birkbeck, Brasca, Rodriguez, van de Velde, Yang 
+ abstract: |
+           Altough this is far from the general case of Fermat’s last theorem, the
+           case of regular prime exponents is a nice test case for the
+           foundations of algebraic number theory.
+ url: https://leanprover-community.github.io/flt-regular/blueprint/ 
+ organization: leanprover-community
+ repo: flt-regular
+- 
+ title: Polynomial Freiman-Ruzsa conjecture
+ authors: Tao et al
+ abstract: |
+           This is a famous conjecture in additive combinatorics whose
+           solution was announced in November 2023 and formalized in three
+           weeks thanks to a large collaborative project.
+ url: https://teorth.github.io/pfr/
+ organization: teorth
+ repo: pfr
+-
+ title: Cedar specification
+ authors: Emina Torlak et al
+ abstract: |
+           Cedar is a language for defining permissions as policies, which
+           describe who should have access to what. It is also a specification for
+           evaluating those policies. The specification has been formalized and
+           the implementation in Lean is used to check the Rust implementation
+           by comparison.
+ url: https://github.com/cedar-policy/cedar-spec/tree/main/cedar-lean
+ organization: cedar-policy
+ repo: cedar-spec
+- 
+ title: Cairo verification
+ authors: Avigad
+ abstract: |
+           Cairo is a blockchain-based programming language. Various components
+           of the language and its library have been formalized.  
+ url: https://github.com/starkware-libs/formal-proofs 
+ organization: starkware-libs
+ repo: formal-proofs 
