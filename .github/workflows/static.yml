@@ -6,6 +6,12 @@ on:
   push:
     branches: ["main"]
 
+  # The community site embeds data fetched at build time (theorem counts,
+  # contributor counts, project and event lists), so it goes stale without a
+  # periodic rebuild even when nothing in this repository changes.
+  schedule:
+    - cron: '0 4 * * *'
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -31,10 +37,36 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          # TODO: community/make_site.py does not build on 3.12 and above yet
+          python-version: '3.11'
+
+      - name: Install bibtool
         run: |
-          chmod +x build.sh
-          ./build.sh
+          sudo apt-get update --fix-missing
+          sudo apt-get install -y bibtool
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip -r community/requirements.txt
+
+      - name: Build
+        # build.sh builds the landing page *and* the community site. Deploying
+        # replaces the whole site, so a partial build must never be deployed;
+        # letting the build fail here leaves the previous deployment serving.
+        run: ./build.sh
+        env:
+          # Needed for the GitHub API calls that rank the formalizations on the
+          # community site's front page; unauthenticated requests rate-limit.
+          GITHUB_TOKEN: ${{ github.token }}
+          # Optional. Without it the community map on meet.html is empty; see
+          # the note in README.md.
+          ZULIP_KEY: ${{ secrets.ZULIP_KEY }}
+          # Optional. Without it the reviewers team page omits review interests.
+          QUEUEBOARD_REVIEWER_INTERESTS_API_URL: ${{ vars.QUEUEBOARD_REVIEWER_INTERESTS_API_URL }}
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

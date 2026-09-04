@@ -1,0 +1,51 @@
+name: build site (pull request)
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          # TODO: community/make_site.py does not build on 3.12 and above yet
+          python-version: '3.11'
+
+      - name: Install bibtool
+        run: |
+          sudo apt-get update --fix-missing
+          sudo apt-get install -y bibtool
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip -r community/requirements.txt
+
+      - name: Build
+        id: build
+        # Secrets are not available to pull requests from forks; build.sh
+        # unsets the empty values that produces, so the build degrades (an
+        # empty community map) rather than failing.
+        run: ./build.sh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ZULIP_KEY: ${{ secrets.ZULIP_KEY }}
+          QUEUEBOARD_REVIEWER_INTERESTS_API_URL: ${{ vars.QUEUEBOARD_REVIEWER_INTERESTS_API_URL }}
+
+      - name: Upload artifact
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site/
