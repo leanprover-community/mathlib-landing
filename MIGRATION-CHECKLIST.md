@@ -78,9 +78,9 @@ There are many links between these files so should be migrated together.
 - [ ] `get_started.html`
   - [ ] `learn.html`
     - [ ] `events.html`
+- [ ] `install/project.html` -> discuss!
 
-Do not move?
-- [ ] `install/project.html`
+Do not move (these are just redirects)
 - [ ] `install/macos.html`
 - [ ] `install/macos_details.html`
 - [ ] `install/linux.html`
