@@ -140,23 +140,19 @@ group. Each breaks if the target moves and the source does not.
 ## No internal links
 
 These are probably linked to from outside sources (Zulip linkifiers?).
+This list ignores webpages we don't want to move over.
 
 - `cite.html`
 - `did_you_prove_it.html`
 - `extras/tactic_writing.html`
 - `latex.html`
 - `googlef0c00cb4d31b246f.html`
-- `queue-redirect.html`
-- `install/macos.html`, `install/macos_details.html`, `install/linux.html`,
-  `install/debian.html`, `install/debian_details.html`, `install/windows.html`
+- `queue-redirect.html` (clearly mathlib-specific; unclear if still relevant)
 
 ## Meta-refresh redirects
 
 - `courses.html` → `teaching/courses.html`
 - `queue-redirect.html` → mathlib4 PR search on GitHub
-- `install/macos.html`, `install/macos_details.html`, `install/linux.html`,
-  `install/debian.html`, `install/debian_details.html`,
-  `install/windows.html` → `docs.lean-lang.org` quickstart
 
 ## Shared build inputs
 
