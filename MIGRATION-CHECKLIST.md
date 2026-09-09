@@ -37,7 +37,7 @@ There are many links between these files so should be migrated together.
 - [x] `contribute/commit.html`
 - [x] `contribute/pr-review.html`
 - [x] `contribute/git.html`
-- [ ] `contribute/tags_and_branches.html` (maybe out of date, double check?)
+- [ ] `contribute/tags_and_branches.html` (describes the old system: will be out of date with move to lean-downstream repo; don't migrate (but update and then move over)
 - [x] `mathlib_stats.html`
 - [x] `queue-redirect.html`
 
