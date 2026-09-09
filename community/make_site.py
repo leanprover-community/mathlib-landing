@@ -141,35 +141,37 @@ else:
     github_auth = None
 github = Github(auth=github_auth)
 
-@dataclass
-class Formalization:
-    title: str
-    authors: str
-    abstract: str
-    url: str
-    organization: str
-    repo: str
+# TODO: re-enable this if/when a list of formalizations is moved over
+# @dataclass
+# class Formalization:
+#     title: str
+#     authors: str
+#     abstract: str
+#     url: str
+#     organization: str
+#     repo: str
 
-    @cached_property
-    def github_repo(self):
-        return github.get_repo(self.organization + '/' + self.repo)
+#     @cached_property
+#     def github_repo(self):
+#         return github.get_repo(self.organization + '/' + self.repo)
 
-    @property
-    def stars(self):
-        return self.github_repo.stargazers_count
+#     @property
+#     def stars(self):
+#         return self.github_repo.stargazers_count
 
-with (DATA/'formalizations.yaml').open('r', encoding='utf-8') as f_file:
-    formalizations = sorted([Formalization(**form) for form in yaml.safe_load(f_file)], key=lambda form: form.stars, reverse=True)
+# with (DATA/'formalizations.yaml').open('r', encoding='utf-8') as f_file:
+#     formalizations = sorted([Formalization(**form) for form in yaml.safe_load(f_file)], key=lambda form: form.stars, reverse=True)
 
-@dataclass
-class People:
-    name: str
-    descr: str = ''
-    img: str = ''
-    github: str = ''
+# TODO: re-enable this when a teams page is moved over
+# @dataclass
+# class People:
+#     name: str
+#     descr: str = ''
+#     img: str = ''
+#     github: str = ''
 
-with (DATA/'people.yaml').open('r', encoding='utf-8') as m_file:
-    peoples = {mtr['name']: People(**mtr) for mtr in yaml.safe_load(m_file)}
+# with (DATA/'people.yaml').open('r', encoding='utf-8') as m_file:
+#     peoples = {mtr['name']: People(**mtr) for mtr in yaml.safe_load(m_file)}
 
 reviewer_data: dict = {}
 _queueboard_url = os.environ.get('QUEUEBOARD_REVIEWER_INTERESTS_API_URL')
@@ -180,21 +182,22 @@ if _queueboard_url:
     except Exception as e:
         print(f'Warning: could not fetch reviewer data: {e}', file=sys.stderr)
 
-@dataclass
-class Team:
-    name: str
-    short_description: str
-    description: str
-    url: str
-    members: List[People]
-    use_biography: bool = False
+# TODO: re-enable this when a teams page is moved over
+# @dataclass
+# class Team:
+#     name: str
+#     short_description: str
+#     description: str
+#     url: str
+#     members: List[People]
+#     use_biography: bool = False
 
-with (DATA/'teams.yaml').open('r', encoding='utf-8') as t_file:
-    teams = [Team(team['name'], team['short_description'],
-                  team['description'], team['url'],
-                  [peoples.get(name, People(name)) for name in sorted(team['members'])],
-                  use_biography=team.get('use_biography', True))
-             for team in yaml.safe_load(t_file)]
+# with (DATA/'teams.yaml').open('r', encoding='utf-8') as t_file:
+#     teams = [Team(team['name'], team['short_description'],
+#                   team['description'], team['url'],
+#                   [peoples.get(name, People(name)) for name in sorted(team['members'])],
+#                   use_biography=team.get('use_biography', True))
+#              for team in yaml.safe_load(t_file)]
 
 @dataclass
 class DocDecl:
@@ -306,30 +309,31 @@ class TheoremForWebpage:
     note: Optional[str] = None
 
 
-@dataclass
-class Event:
-    title: str
-    location: str
-    type: str
-    url: str = 'TBA'
-    start_date: str = ''
-    end_date: str = ''
-    date_range: str = 'TBA'
+# TODO: uncomment these if/when the corresponding section gets moved over
+# @dataclass
+# class Event:
+#     title: str
+#     location: str
+#     type: str
+#     url: str = 'TBA'
+#     start_date: str = ''
+#     end_date: str = ''
+#     date_range: str = 'TBA'
 
-@dataclass
-class Course:
-    name: str
-    instructor: str
-    institution: str
-    lean_version: int
-    website: Optional[str] = None
-    repo: Optional[str] = None
-    material: Optional[str] = None
-    notes : Optional[str] = None
-    tags: List[str] = field(default_factory=list)
-    year: int = 2023
-    summary : Optional[str] = None
-    experiences : Optional[str] = None
+# @dataclass
+# class Course:
+#     name: str
+#     instructor: str
+#     institution: str
+#     lean_version: int
+#     website: Optional[str] = None
+#     repo: Optional[str] = None
+#     material: Optional[str] = None
+#     notes : Optional[str] = None
+#     tags: List[str] = field(default_factory=list)
+#     year: int = 2023
+#     summary : Optional[str] = None
+#     experiences : Optional[str] = None
 
 @dataclass
 class DocumentationEntry:
@@ -543,24 +547,25 @@ else:
 with (DATA/'theories_index.yaml').open('r', encoding='utf-8') as h_file:
     theories = yaml.safe_load(h_file)
 
-with (DATA/'events.yaml').open('r', encoding='utf-8') as h_file:
-    events = [Event(**e) for e in yaml.safe_load(h_file)]
+# TODO: uncomment these if/when a list of courses is moved over
+# with (DATA/'events.yaml').open('r', encoding='utf-8') as h_file:
+#     events = [Event(**e) for e in yaml.safe_load(h_file)]
 
-with (DATA/'courses.yaml').open('r', encoding='utf-8') as h_file:
-    courses = [Course(**e) for e in yaml.safe_load(h_file)]
-courses_tags = set()
-courses.sort(key=lambda c: (-c.lean_version, -c.year, c.name))
-for course in courses:
-    courses_tags.update(course.tags)
-    course.tags.sort()
-    course.tags.append(f'lean{course.lean_version}')
-    for field in ['experiences', 'notes', 'summary', 'experiences']:
-        val = getattr(course, field)
-        if isinstance(val, str):
-            setattr(course, field, render_markdown(val))
-        elif isinstance(val, list):
-            setattr(course, field, render_markdown("\n".join(map(lambda v: "* " + v, val))))
-courses_tags = ['lean4', 'lean3'] + sorted(list(courses_tags))
+# with (DATA/'courses.yaml').open('r', encoding='utf-8') as h_file:
+#     courses = [Course(**e) for e in yaml.safe_load(h_file)]
+# courses_tags = set()
+# courses.sort(key=lambda c: (-c.lean_version, -c.year, c.name))
+# for course in courses:
+#     courses_tags.update(course.tags)
+#     course.tags.sort()
+#     course.tags.append(f'lean{course.lean_version}')
+#     for field in ['experiences', 'notes', 'summary', 'experiences']:
+#         val = getattr(course, field)
+#         if isinstance(val, str):
+#             setattr(course, field, render_markdown(val))
+#         elif isinstance(val, list):
+#             setattr(course, field, render_markdown("\n".join(map(lambda v: "* " + v, val))))
+# courses_tags = ['lean4', 'lean3'] + sorted(list(courses_tags))
 
 documentation_tags = {}
 documentation_lists = {
@@ -606,71 +611,73 @@ def format_date_range(event):
     else:
         return 'TBA'
 
-present = datetime.now().date()
-old_events = sorted((e for e in events if e.end_date and datetime.strptime(e.end_date, '%B %d %Y').date() < present), key=lambda e: datetime.strptime(e.end_date, '%B %d %Y').date(), reverse=True)
-new_events = sorted((e for e in events if (not e.end_date) or datetime.strptime(e.end_date, '%B %d %Y').date() >= present), key=lambda e: datetime.strptime(e.end_date, '%B %d %Y').date())
+# TODO: uncomment these if/when a list of events is moved over
+# present = datetime.now().date()
+# old_events = sorted((e for e in events if e.end_date and datetime.strptime(e.end_date, '%B %d %Y').date() < present), key=lambda e: datetime.strptime(e.end_date, '%B %d %Y').date(), reverse=True)
+# new_events = sorted((e for e in events if (not e.end_date) or datetime.strptime(e.end_date, '%B %d %Y').date() >= present), key=lambda e: datetime.strptime(e.end_date, '%B %d %Y').date())
 
-for e in old_events + new_events:
-    e.date_range = format_date_range(e)
-
-
-@dataclass
-class Project:
-    name: str
-    organization: str
-    description: str
-    maintainers: List[str]
-    stars: int
-    url: str
-
-if DOWNLOAD:
-    download(
-        'https://leanprover-contrib.github.io/leanprover-contrib/projects/projects.yml',
-        DATA/'projects_3.yaml')
-    with (DATA/'projects_3.yaml').open('r', encoding='utf-8') as h_file:
-        oprojects_3 = yaml.safe_load(h_file)
-    pkl_dump('oprojects_3', oprojects_3)
-else:
-    oprojects_3 = pkl_load('oprojects_3', [])
+# for e in old_events + new_events:
+#     e.date_range = format_date_range(e)
 
 
-projects_3 = []
-if DOWNLOAD:
-    for name, project in oprojects_3.items():
-        if project.get('display', True):
-            github_repo = github.get_repo(project['organization'] + '/' + name)
-            stars = github_repo.stargazers_count
-            descr = render_markdown(project['description'])
-            projects_3.append(Project(name, project['organization'], descr, project['maintainers'], stars, github_repo.html_url))
-    projects_3.sort(key = lambda p: p.stars, reverse=True)
-    pkl_dump('projects_3', projects_3)
-else:
-    projects_3 = pkl_load('projects_3', [])
+# TODO: uncomment this if/when a list of projects is moved over
+# @dataclass
+# class Project:
+#     name: str
+#     organization: str
+#     description: str
+#     maintainers: List[str]
+#     stars: int
+#     url: str
 
-if DOWNLOAD:
-    download(
-        'https://raw.githubusercontent.com/leanprover-community/mathlib4/refs/heads/master/scripts/downstream_repos.yml',
-        DATA/'projects_4.yaml')
-    with (DATA/'projects_4.yaml').open('r', encoding='utf-8') as h_file:
-        oprojects_4 = yaml.safe_load(h_file)
-    pkl_dump('oprojects_4', oprojects_4)
-else:
-    oprojects_4 = pkl_load('oprojects_4', [])
+# if DOWNLOAD:
+#     download(
+#         'https://leanprover-contrib.github.io/leanprover-contrib/projects/projects.yml',
+#         DATA/'projects_3.yaml')
+#     with (DATA/'projects_3.yaml').open('r', encoding='utf-8') as h_file:
+#         oprojects_3 = yaml.safe_load(h_file)
+#     pkl_dump('oprojects_3', oprojects_3)
+# else:
+#     oprojects_3 = pkl_load('oprojects_3', [])
 
 
-projects_4 = []
-if DOWNLOAD:
-    for project in oprojects_4:
-        repo_path = urlparse(project['github']).path[1:] # Cut off first '/'
-        github_repo = github.get_repo(repo_path)
-        name = project['name']
-        stars = github_repo.stargazers_count
-        descr = render_markdown(github_repo.description) if github_repo.description is not None else None
-        projects_4.append(Project(name, github_repo.owner.login, descr, None, stars, github_repo.html_url))
-    projects_4.sort(key = lambda p: p.stars, reverse=True)
-    pkl_dump('projects_4', projects_4)
-else:
-    projects_4 = pkl_load('projects_4', [])
+# projects_3 = []
+# if DOWNLOAD:
+#     for name, project in oprojects_3.items():
+#         if project.get('display', True):
+#             github_repo = github.get_repo(project['organization'] + '/' + name)
+#             stars = github_repo.stargazers_count
+#             descr = render_markdown(project['description'])
+#             projects_3.append(Project(name, project['organization'], descr, project['maintainers'], stars, github_repo.html_url))
+#     projects_3.sort(key = lambda p: p.stars, reverse=True)
+#     pkl_dump('projects_3', projects_3)
+# else:
+#     projects_3 = pkl_load('projects_3', [])
+
+# if DOWNLOAD:
+#     download(
+#         'https://raw.githubusercontent.com/leanprover-community/mathlib4/refs/heads/master/scripts/downstream_repos.yml',
+#         DATA/'projects_4.yaml')
+#     with (DATA/'projects_4.yaml').open('r', encoding='utf-8') as h_file:
+#         oprojects_4 = yaml.safe_load(h_file)
+#     pkl_dump('oprojects_4', oprojects_4)
+# else:
+#     oprojects_4 = pkl_load('oprojects_4', [])
+
+
+# projects_4 = []
+# if DOWNLOAD:
+#     for project in oprojects_4:
+#         repo_path = urlparse(project['github']).path[1:] # Cut off first '/'
+#         github_repo = github.get_repo(repo_path)
+#         name = project['name']
+#         stars = github_repo.stargazers_count
+#         descr = render_markdown(github_repo.description) if github_repo.description is not None else None
+#         projects_4.append(Project(name, github_repo.owner.login, descr, None, stars, github_repo.html_url))
+#     projects_4.sort(key = lambda p: p.stars, reverse=True)
+#     pkl_dump('projects_4', projects_4)
+# else:
+#     projects_4 = pkl_load('projects_4', [])
 
 if DOWNLOAD:
     # We used to use this count but it didn't include mathlib3 contributors
@@ -933,7 +940,9 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
                 ('.*', default_context),
                 ('index.html', {'presentation': presentation,
                                 'what_is': what_is,
-                                'formalizations': formalizations}),
+                                # TODO: uncomment if/when this list is moved over
+                                #'formalizations': formalizations}),
+                                }),
                 ('papers.html', {'paper_lists': paper_lists}),
                 ('100.html', {'hundred_theorems': hundred_theorems}),
                 ('100-missing.html', {'hundred_theorems': hundred_theorems}),
@@ -946,10 +955,11 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
                 ('undergrad.html', {'overviews': undergrad_overviews}),
                 ('undergrad_todo.html', {'overviews': undergrad_overviews}),
                 ('mathlib_stats.html', {'num_defns': num_defns, 'num_thms': num_thms, 'num_contrib': num_contrib}),
-                ('lean_projects.html', {'projects_3': projects_3, 'projects_4': projects_4}),
-                ('events.html', {'old_events': old_events, 'new_events': new_events}),
-                ('teaching/courses.html', {'courses': courses, 'tags': courses_tags}),
-                ('teams.html', {'introduction': read_md('teams_intro.md'), 'teams': teams}),
+                # TODO: uncomment these if/when the corresponding page is moved over
+                # ('lean_projects.html', {'projects_3': projects_3, 'projects_4': projects_4}),
+                # ('events.html', {'old_events': old_events, 'new_events': new_events}),
+                # ('teaching/courses.html', {'courses': courses, 'tags': courses_tags}),
+                # ('teams.html', {'introduction': read_md('teams_intro.md'), 'teams': teams}),
                 ('documentation.html', {'documentation_lists': documentation_lists, 'documentation_tags': documentation_tags}),
                 ('.*.md', get_contents),
                 ],
@@ -957,19 +967,20 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
             mergecontexts=True,
             template_filter=template_filter)
 
-    # Now build the individual team pages
-    (target/'teams').mkdir(exist_ok=True)
-    env = Environment(loader=FileSystemLoader('templates'))
-    env.filters={ 'url': url, 'md': render_markdown, 'tex': clean_tex }
-    team_tpl = env.get_template('_team.html')
-    for team in teams:
-        extra = {'reviewer_data': reviewer_data} if team.url == 'reviewers' else {}
-        with (target/'teams'/(team.url + '.html')).open('w') as tgt_file:
-            team_tpl.stream(team=team, menus=menus, base_url=base_url,
-                            edit_base=edit_base, **extra).dump(tgt_file)
+    # TODO: uncomment if/when the corresponding team page is moved over
+    # # Now build the individual team pages
+    # (target/'teams').mkdir(exist_ok=True)
+    # env = Environment(loader=FileSystemLoader('templates'))
+    # env.filters={ 'url': url, 'md': render_markdown, 'tex': clean_tex }
+    # team_tpl = env.get_template('_team.html')
+    # for team in teams:
+    #     extra = {'reviewer_data': reviewer_data} if team.url == 'reviewers' else {}
+    #     with (target/'teams'/(team.url + '.html')).open('w') as tgt_file:
+    #         team_tpl.stream(team=team, menus=menus, base_url=base_url,
+    #                         edit_base=edit_base, **extra).dump(tgt_file)
 
-
-    for folder in ['css', 'js', 'img', 'papers', str(target/'teams')]:
+    # If so, uncomment this value also!
+    for folder in ['css', 'js', 'img', 'papers']: #, str(target/'teams')]:
         subprocess.call(['rsync', '-a', folder, str(target).rstrip('/')])
     subprocess.call(['rsync', '-a', 'googlef0c00cb4d31b246f.html', str(target).rstrip('/')])
     subprocess.call(['rsync', '-a', 'robots.txt', str(target).rstrip('/')])
