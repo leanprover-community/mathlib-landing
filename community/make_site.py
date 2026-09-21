@@ -948,9 +948,10 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
                 ('100-missing.html', {'hundred_theorems': hundred_theorems}),
                 ('1000.html', {'thousand_theorems': thousand_theorems}),
                 ('1000-missing.html', {'thousand_theorems': thousand_theorems}),
-                ('meet.html', {'users': users,
-                               'community': read_md('community.md')
-                               }),
+                # TODO: uncomment this if/when the corresponding page is moved over
+                # ('meet.html', {'users': users,
+                #                'community': read_md('community.md')
+                #                }),
                 ('mathlib-overview.html', {'overviews': overviews, 'theories': theories}),
                 ('undergrad.html', {'overviews': undergrad_overviews}),
                 ('undergrad_todo.html', {'overviews': undergrad_overviews}),
