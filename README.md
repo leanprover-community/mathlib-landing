@@ -96,24 +96,18 @@ build the site and upload it as an artifact without deploying.
 so the whole site's location is one variable, `SITE_URL`, defaulting to
 `https://mathlib.org`.
 
-Two things do not go through it and are worth knowing about:
+The generated API documentation is a separate site and has its own variable,
+`SITE_DOCS_URL`, defaulting to
+`https://leanprover-community.github.io/mathlib4_docs/`. Every declaration
+link on `100.html`, `1000.html`, `undergrad.html` and `mathlib-overview.html`
+is built from it. Point it elsewhere if mathlib.org ever serves its own copy.
 
-- Links into the mathlib API documentation are hardcoded in `make_site.py` as
-  `/mathlib4_docs/...`, rooted at the site being served, not at `SITE_URL`.
-  Nothing serves `/mathlib4_docs/` here, so every one of them is broken; see
-  the note below.
-- `make_site.py` copies `community/robots.txt` into the output. That file is
-  the other site's. `build.sh` overwrites it afterwards.
+One thing does not go through either: `make_site.py` copies
+`community/robots.txt` into the output, and that file is the other site's.
+`build.sh` overwrites it afterwards.
 
 ## Known gaps
 
-- **API documentation links are broken.** `make_site.py` emits
-  `/mathlib4_docs/...` and `./mathlib4_docs/...` for every declaration link on
-  `100.html`, `1000.html`, `undergrad.html`, `mathlib-overview.html` and
-  `contribute/style.html` — 1366 distinct targets. They pointed at the docs
-  that leanprover-community.github.io serves alongside those pages; nothing
-  serves them here. Either give `make_site.py` a docs base URL, or serve
-  `/mathlib4_docs/` from mathlib.org.
 - **Google site verification.** `googlef0c00cb4d31b246f.html` verifies the
   other site and was not migrated; mathlib.org needs its own.
 - **Branding.** The front page, its title and the sidebar brand still say
