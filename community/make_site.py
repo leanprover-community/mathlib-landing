@@ -107,7 +107,11 @@ TEMPLATE_SRC = str(ROOT/'templates')
 # script. All internal links are formed by appending to base_url, so pointing
 # it elsewhere relocates the whole site.
 DEFAULT_BASE_URL = 'https://leanprover-community.github.io/'
-DEFAULT_EDIT_BASE = 'https://github.com/leanprover-community/leanprover-community.github.io/blob/lean4/templates/'
+# The edit links point at this repository, which is where these templates live
+# now. build.sh passes the same value, so CI never falls back to this default,
+# but running make_site.py directly -- as community/README.md describes -- would
+# otherwise offer to edit the other repository's copies of these files.
+DEFAULT_EDIT_BASE = 'https://github.com/leanprover-community/mathlib-landing/blob/main/community/templates/'
 
 # The generated API documentation is not part of this site. Links into it used
 # to be formed as site-root-relative '/mathlib4_docs/...' paths, which resolved

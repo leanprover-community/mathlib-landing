@@ -48,7 +48,10 @@ defaults, so running `make_site.py` directly needs none of them:
   slash is added if missing. It is ignored when `--local` is passed, which
   derives a `file://` url from `SITE_TARGET` instead.
 * `SITE_EDIT_BASE`: prefix for the "Suggest edits to this page on GitHub"
-  footer link, which points at the templates rather than at the built site.
+  footer link, which points at the templates rather than at the built site
+  (default
+  `https://github.com/leanprover-community/mathlib-landing/blob/main/community/templates/`,
+  where these templates live; `../build.sh` passes the same value).
 * `SITE_DOCS_URL`: where the generated API documentation is served
   (default `https://leanprover-community.github.io/mathlib4_docs/`). Every
   declaration link on `100.html`, `1000.html`, `undergrad.html` and
