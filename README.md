@@ -17,10 +17,15 @@ one of them links to it there by absolute URL.
 
 Both sites therefore serve the migrated pages — this repository at
 `https://mathlib.org/contribute/style.html`, the other at
-`https://leanprover-community.github.io/contribute/style.html` — and now that
-`/community/` is gone, so is the `robots.txt` rule that kept crawlers off the
-copy. Deduplicating means deleting the migrated pages from the other
-repository, or redirecting them here.
+`https://leanprover-community.github.io/contribute/style.html`. Until one side
+stops, every page built here carries `<meta name="robots" content="noindex">`
+so that only the established copy appears in search results. Set
+`SITE_NOINDEX=0` to lift it, once the migrated pages have been deleted from
+the other repository or redirected here.
+
+`robots.txt` deliberately allows crawling: a crawler has to fetch a page to
+see its noindex tag, so disallowing would hide the instruction and leave
+Google free to index the URLs regardless.
 
 `community/` is a copy of that repository's `lean4` branch, last synced at
 `52a665f5`, with these deliberate exceptions:
@@ -77,6 +82,9 @@ Three optional variables improve the result and are all safe to omit:
 | `GITHUB_TOKEN` | API rate limits are hit quickly |
 | `ZULIP_KEY` | unused while `meet.html` is not migrated |
 | `QUEUEBOARD_REVIEWER_INTERESTS_API_URL` | unused while the reviewers team page is not migrated |
+
+Two more control where the build points rather than what it contains:
+`SITE_DOCS_URL` (above) and `SITE_NOINDEX`.
 
 `build.sh` unsets the first two when they are set but empty, which is what
 GitHub Actions passes for a secret that has not been configured.

@@ -186,7 +186,8 @@ Pages that must move together, or duplicate a build-time download.
 ## Blocking deployment
 
 - `googlef0c00cb4d31b246f.html` — mathlib.org needs its own verification file.
-- Duplicate content — the migrated pages are served by both sites and, with
-  `/community/` gone, nothing tells crawlers which is canonical.
+- Duplicate content — the migrated pages are served by both sites. Held off
+  for now with a site-wide noindex; lifting it (`SITE_NOINDEX=0`) means first
+  deleting them from the other repository or redirecting those URLs here.
 - `theories.html` is built and deployed but has no menu entry; it is reached
   only from `mathlib-overview.html` and `contribute/doc.html`.
