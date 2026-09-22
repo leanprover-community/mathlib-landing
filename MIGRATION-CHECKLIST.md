@@ -1,20 +1,26 @@
 # Community site migration checklist
 
-All pages under `/community/`, as a checklist for deciding page-by-page
+All pages of the original site, as a checklist for deciding page-by-page
 whether it should live on mathlib.org or stay on
 [leanprover-community.github.io](https://leanprover-community.github.io/).
-Snapshot of the `lean4` branch at `0679c847` (2026-09-03).
+Synced with the `lean4` branch at `52a665f5` (2026-09-21).
+
+The checked pages are now served at the root of mathlib.org; the unchecked
+ones are not built here and are linked by absolute URL to the other site.
 
 **Nesting means the parent links to the child** (excluding sidebar navigation links)
 
 ## Front page
 
-- [ ] `index.html`
+- [x] `index.html` — serves as mathlib.org's front page, replacing the old
+  landing page. Still titled "Lean community" and still advertising itself as
+  the community site.
 
 ## Community and teams
 
 - [ ] `meet.html`
-  - [ ] `community_guidelines.html`
+  - [ ] `community_guidelines.html` — **built and deployed here already**,
+    while the menu links to the other site's copy; resolve one way or the other
   - [ ] `teams.html`
     - [ ] `teams/admin.html`
     - [ ] `teams/maintainers.html`
@@ -37,9 +43,12 @@ There are many links between these files so should be migrated together.
 - [x] `contribute/commit.html`
 - [x] `contribute/pr-review.html`
 - [x] `contribute/git.html`
-- [ ] `contribute/tags_and_branches.html` (describes the old system: will be out of date with move to lean-downstream repo; don't migrate (but update and then move over)
+- [ ] `contribute/tags_and_branches.html` — upstream rewrote this for the
+  lean-downstream repo in #916, so the reason for holding it back is gone and
+  it is now a candidate for migration
 - [x] `mathlib_stats.html`
-- [x] `queue-redirect.html`
+- [ ] `queue-redirect.html` — the template was deleted, so this is not
+  built here despite being mathlib-specific
 
 ## Library overviews
 
@@ -75,7 +84,8 @@ There are many links between these files so should be migrated together.
 
 ## Getting started and install
 
-- [ ] `get_started.html`
+- [ ] `get_started.html` — **built and deployed here already**, while the menu
+  links to the other site's copy; resolve one way or the other
   - [ ] `learn.html`
     - [ ] `events.html`
 - [ ] `install/project.html` -> discuss!
@@ -98,7 +108,8 @@ Do not move (these are just redirects)
 
 ## Papers, citation and projects
 
-- [ ] `papers.html`
+- [ ] `papers.html` — **built and deployed here already**, but not linked from
+  the menu; decide whether to migrate it properly or delete the template
 - [x] `cite.html`
 - [ ] `lean_projects.html`
 
@@ -169,3 +180,20 @@ Pages that must move together, or duplicate a build-time download.
 - `ZULIP_KEY` — `meet.html`
 - `QUEUEBOARD_REVIEWER_INTERESTS_API_URL` — `teams/reviewers.html`
 - `mathlib_stats` contributor count and `gitstats.js` — `mathlib_stats.html`
+
+---
+
+## Blocking deployment
+
+- `/mathlib4_docs/` — `make_site.py` hardcodes declaration links as
+  `/mathlib4_docs/...` and `./mathlib4_docs/...`, which resolve against
+  whatever site serves the page rather than against `SITE_URL`. On
+  leanprover-community.github.io those land on the API documentation; on
+  mathlib.org nothing serves them. 1366 distinct targets across `100.html`,
+  `1000.html`, `undergrad.html`, `mathlib-overview.html` and
+  `contribute/style.html`.
+- `googlef0c00cb4d31b246f.html` — mathlib.org needs its own verification file.
+- Duplicate content — the migrated pages are served by both sites and, with
+  `/community/` gone, nothing tells crawlers which is canonical.
+- `theories.html` is built and deployed but has no menu entry; it is reached
+  only from `mathlib-overview.html` and `contribute/doc.html`.

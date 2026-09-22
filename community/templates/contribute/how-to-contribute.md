@@ -91,10 +91,10 @@ below the `---`.
 
 ## Lifecycle of a PR
 
-Many reviewers use the [review queue](../queueboard/review_dashboard.html) to identify PRs that are ready for review.
+Many reviewers use the [review queue](https://leanprover-community.github.io/queueboard/review_dashboard.html) to identify PRs that are ready for review.
 The instructions below will ensure that your PR appears on that queue; if it doesn't appear there it may not receive much attention.
 Everyone is also invited to regularly look at the queue (it is linkified as `#queueboard` on Zulip), and write reviews of PRs within their expertise.
-You can check if your [PR is on the queue](../queueboard/on_the_queue.html), and if not, what is needed to get it on.
+You can check if your [PR is on the queue](https://leanprover-community.github.io/queueboard/on_the_queue.html), and if not, what is needed to get it on.
 
 The review queue is controlled by GitHub "labels".
 On the main page for a PR, on the right-hand side,
@@ -119,7 +119,7 @@ This list is exhaustive.  If you would like to add a different label, please, br
 
 If your PR builds (has a green checkmark), someone will "review" it within a few weeks (depending on the size of the PR; smaller PRs will get quicker responses). They will probably leave comments and add the label **"awaiting-author"**. You should address each comment, clicking the "resolve conversation" button once the problem is resolved. Ideally each problem is resolved with a new commit, but there is no hard rule here. Once all requested changes are implemented, you should remove the **"awaiting-author"** label to start the process over again.
 
-There are different groups of people that can review your PR: anyone, [reviewers](../teams/reviewers.html) and [maintainers](../teams/maintainers.html).
+There are different groups of people that can review your PR: anyone, [reviewers](https://leanprover-community.github.io/teams/reviewers.html) and [maintainers](https://leanprover-community.github.io/teams/maintainers.html).
 Anyone who has something useful to say can review your PR.
 If they think your PR is ready to move to the next stage, they might leave an "approving" review on GitHub.
 These reviews are taken into account by reviewers.

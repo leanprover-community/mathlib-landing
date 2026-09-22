@@ -983,7 +983,9 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
     # If so, uncomment this value also!
     for folder in ['css', 'js', 'img', 'papers']: #, str(target/'teams')]:
         subprocess.call(['rsync', '-a', folder, str(target).rstrip('/')])
-    subprocess.call(['rsync', '-a', 'googlef0c00cb4d31b246f.html', str(target).rstrip('/')])
+    # The Google site-verification file was not migrated: mathlib.org needs its
+    # own, and this one verifies leanprover-community.github.io.
+    # subprocess.call(['rsync', '-a', 'googlef0c00cb4d31b246f.html', str(target).rstrip('/')])
     subprocess.call(['rsync', '-a', 'robots.txt', str(target).rstrip('/')])
 
     site.render(use_reloader=reloader)

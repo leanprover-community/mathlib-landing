@@ -53,13 +53,13 @@ jobs:
         run: python -m pip install --upgrade pip -r community/requirements.txt
 
       - name: Build
-        # build.sh builds the landing page *and* the community site. Deploying
-        # replaces the whole site, so a partial build must never be deployed;
-        # letting the build fail here leaves the previous deployment serving.
+        # Deploying replaces the whole site, so a partial build must never
+        # be deployed; letting the build fail here leaves the previous
+        # deployment serving.
         run: ./build.sh
         env:
-          # Needed for the GitHub API calls that rank the formalizations on the
-          # community site's front page; unauthenticated requests rate-limit.
+          # Needed for the GitHub API calls made while building; unauthenticated
+          # requests rate-limit.
           GITHUB_TOKEN: ${{ github.token }}
           # Optional. Without it the community map on meet.html is empty; see
           # the note in README.md.
