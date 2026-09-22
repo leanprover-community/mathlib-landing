@@ -4,7 +4,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+{% if noindex %}    <!-- These pages are also served by leanprover-community.github.io; keep that
+         copy the one search engines show until the duplication is resolved. -->
+    <meta name="robots" content="noindex">
+{% endif %}
   <link rel="stylesheet" href="{{base_url}}css/lean.css" >
   <link rel="shortcut icon" href="{{base_url}}img/favicon.ico">
   <link rel="search" type="application/opensearchdescription+xml" title="mathlib docs" href="{{base_url}}opensearch.xml">

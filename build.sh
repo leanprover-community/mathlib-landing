@@ -41,6 +41,12 @@ SITE_EDIT_BASE="https://github.com/leanprover-community/mathlib-landing/blob/mai
 # site root rather than a subdirectory, so it would be the live robots.txt.
 # That file is the old site's, and the pages it names do not exist here.
 # Overwrite it afterwards so this repository decides what mathlib.org serves.
+#
+# Note this deliberately allows crawling. Every page carries a noindex meta tag
+# while leanprover-community.github.io serves the same pages (see SITE_NOINDEX
+# in make_site.py), and a crawler has to fetch a page to see that tag: a
+# Disallow here would hide the very instruction that keeps these pages out of
+# search results, and Google would be free to index the URLs anyway.
 echo "🤖 Writing robots.txt..."
 cat > "$root/_site/robots.txt" <<'EOF'
 User-agent: *

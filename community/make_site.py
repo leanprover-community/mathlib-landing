@@ -115,6 +115,12 @@ DEFAULT_EDIT_BASE = 'https://github.com/leanprover-community/leanprover-communit
 DEFAULT_DOCS_URL = 'https://leanprover-community.github.io/mathlib4_docs/'
 DOCS_URL = (os.environ.get('SITE_DOCS_URL') or DEFAULT_DOCS_URL).rstrip('/') + '/'
 
+# Every migrated page is also served, unchanged, by
+# leanprover-community.github.io. Until one side stops, ask search engines to
+# index only that one. Defaults to on: the copy that should disappear from
+# results is this one, so the safe state is the one that needs no thought.
+NOINDEX = os.environ.get('SITE_NOINDEX', '1') != '0'
+
 def doc_url(path: str) -> str:
     """Absolute URL for a path inside the generated API documentation.
     header-data.json stores these doc-relative, as './Mathlib/Foo.html#bar'."""
@@ -890,6 +896,7 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
     default_context = lambda: {
             'base_url': base_url,
             'docs_url': DOCS_URL,
+            'noindex': NOINDEX,
             'edit_base': edit_base,
             'menus': menus,
             }
