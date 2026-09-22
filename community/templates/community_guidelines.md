@@ -21,7 +21,7 @@ Repeated violations will result in temporary suspensions, which will increase in
 
 Suspensions and bans are accompanied by an explanation sent to the user's Zulip-registered email address.
 
-The [code of conduct team](/teams/coc.html) serves as first point of contact
+The [code of conduct team](https://leanprover-community.github.io/teams/coc.html) serves as first point of contact
 for reporting any concerns. You can write to members of this team directly or 
 use an [anonymous form](https://docs.google.com/forms/d/e/1FAIpQLSdEjlFqJQV65F-yzRHl-lyWAt7TSUW1axPiQK3RyV67iu1h6Q/viewform)
 to report incidents that violate the community guidelines.

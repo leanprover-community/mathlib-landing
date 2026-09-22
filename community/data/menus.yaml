@@ -33,7 +33,7 @@
     # TODO: decide what to do with the pages here
     - Glossary: https://leanprover-community.github.io/glossary.html
     - Did you really prove it?: https://leanprover-community.github.io/did_you_prove_it.html
-    - About MWEs: https://leanprover-community.github.io/did_you_prove_it.html
+    - About MWEs: https://leanprover-community.github.io/mwe.html
 
 - title: Library overviews
   items:

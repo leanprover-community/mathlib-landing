@@ -18,5 +18,5 @@ Note this requires you to create an account on GitHub.
 
 [Click here for the instructions to install Lean](https://docs.lean-lang.org/lean4/doc/quickstart.html).
 
-After you have followed these instructions, you'll probably want to [learn Lean](learn.html)!
+After you have followed these instructions, you'll probably want to [learn Lean](https://leanprover-community.github.io/learn.html)!
 

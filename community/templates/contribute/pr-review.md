@@ -465,7 +465,7 @@ burden if it won't ever be used.
 
 #### Are the declarations in the appropriate files?
 
-Consider the following example from [#5742](github.com/leanprover-community/mathlib4/pull/5742)
+Consider the following example from [#5742](https://github.com/leanprover-community/mathlib4/pull/5742)
 where the PR author was placing a norm structure on the `Unitization`. The author was
 creating a new file `Analysis.NormedSpace.Unitization` and at a certain point declared the
 instance:
