@@ -42,6 +42,9 @@ Google free to index the URLs regardless.
   and `make_site.py` has the code that reads them commented out.
 - `data/menus.yaml` links to the unmigrated pages by absolute URL, and so do
   the pages that were migrated.
+- `LICENSE` has moved to the root of this repository, where GitHub looks for
+  it, and `templates/cite.md` names that one as the website's licence rather
+  than the other repository's copy.
 
 `diff -r` against a checkout of that branch shows exactly how far the two have
 drifted. Re-syncing is not a plain overwrite any more, because that would
@@ -133,7 +136,3 @@ writes it directly, after the build.
 - **`theories.html` is not in the sidebar.** It is built and reachable, but
   only from `mathlib-overview.html` and `contribute/doc.html`; the sidebar
   lists the individual theory pages instead.
-- **`cite.html` points at the wrong licence.** It says this website is under
-  the MIT licence, linking the other repository's `LICENSE`. That file is
-  copied here as `community/LICENSE`, but this repository has no licence of
-  its own at the root.
