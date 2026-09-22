@@ -838,7 +838,7 @@ The `@[deprecated]` attribute requires the deprecation date, and an alias to the
 or a string to explain how transition away from the old definition when a new version is no longer
 being provided.
 
-The [`deprecate to`](/mathlib4_docs/Mathlib/Tactic/DeprecateTo.html) command and
+The [`deprecate to`](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Tactic/DeprecateTo.html) command and
 `scripts/add_deprecations.sh` script can help generate alias definitions.
 
 Deprecations for declarations with the `to_additive` attribute should ensure the deprecation is

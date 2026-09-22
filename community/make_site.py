@@ -107,6 +107,19 @@ TEMPLATE_SRC = str(ROOT/'templates')
 DEFAULT_BASE_URL = 'https://leanprover-community.github.io/'
 DEFAULT_EDIT_BASE = 'https://github.com/leanprover-community/leanprover-community.github.io/blob/lean4/templates/'
 
+# The generated API documentation is not part of this site. Links into it used
+# to be formed as site-root-relative '/mathlib4_docs/...' paths, which resolved
+# only because leanprover-community.github.io happens to serve the
+# documentation alongside these pages. Point them at where it is published
+# instead, overridable for whoever ends up serving it.
+DEFAULT_DOCS_URL = 'https://leanprover-community.github.io/mathlib4_docs/'
+DOCS_URL = (os.environ.get('SITE_DOCS_URL') or DEFAULT_DOCS_URL).rstrip('/') + '/'
+
+def doc_url(path: str) -> str:
+    """Absolute URL for a path inside the generated API documentation.
+    header-data.json stores these doc-relative, as './Mathlib/Foo.html#bar'."""
+    return DOCS_URL + path.removeprefix('./').lstrip('/')
+
 @dataclass
 class MenuItem:
     title: str
@@ -212,8 +225,8 @@ class DocDecl:
     decl_header_html: str
     """Full HTML code for this declaration's entry on its generated documentation page."""
     docs_link: str
-    """URL of this declaration's entry in the generated documentation.
-    This is site-relative, and starts with "/mathlib4_docs/"."""
+    """Absolute URL of this declaration's entry in the generated
+    documentation; see doc_url."""
     src_link: str
     """URL for this declaration's generated source entry: currently,
     is simply a link to the right revision of the mathlib source code."""
@@ -432,12 +445,12 @@ def download_N_theorems(kind: NTheorems) -> dict:
                             print(f'Error: {thms} entry {id} refers to a nonexistent declaration {decl}')
                             continue
                         # note: the `header-data.json` data file uses doc-relative links
-                        header = decl_info.header.replace('href="./', 'href="./mathlib4_docs/')
+                        header = decl_info.header.replace('href="./', f'href="{DOCS_URL}')
                         doc_decls.append(DocDecl(
                             name=decl,
                             decl_header_html = header,
                             # note: the `header-data.json` data file uses doc-relative links
-                            docs_link='/mathlib4_docs/' + decl_info.info.docLink,
+                            docs_link=doc_url(decl_info.info.docLink),
                             src_link=decl_info.info.sourceLink))
 
                 theorems.append(TheoremForWebpage(id, h.title, statement_formalized, proof_formalized, doc_decls, links, h.authors, h.date, note))
@@ -452,11 +465,11 @@ def replace_link(name, id):
     if name == '':
         return name
     elif '/' in name:
-        return '/mathlib4_docs/' + name
+        return doc_url(name)
     else:
         try:
             # note: the `header-data.json` data file uses doc-relative links
-            return '/mathlib4_docs/' + declarations[name].info.docLink
+            return doc_url(declarations[name].info.docLink)
         except KeyError:
             raise KeyError(f'Error: overview item {id} refers to a nonexistent declaration {name}')
 
@@ -876,6 +889,7 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
     base_url = base_url.rstrip('/') + '/'
     default_context = lambda: {
             'base_url': base_url,
+            'docs_url': DOCS_URL,
             'edit_base': edit_base,
             'menus': menus,
             }

@@ -185,13 +185,6 @@ Pages that must move together, or duplicate a build-time download.
 
 ## Blocking deployment
 
-- `/mathlib4_docs/` — `make_site.py` hardcodes declaration links as
-  `/mathlib4_docs/...` and `./mathlib4_docs/...`, which resolve against
-  whatever site serves the page rather than against `SITE_URL`. On
-  leanprover-community.github.io those land on the API documentation; on
-  mathlib.org nothing serves them. 1366 distinct targets across `100.html`,
-  `1000.html`, `undergrad.html`, `mathlib-overview.html` and
-  `contribute/style.html`.
 - `googlef0c00cb4d31b246f.html` — mathlib.org needs its own verification file.
 - Duplicate content — the migrated pages are served by both sites and, with
   `/community/` gone, nothing tells crawlers which is canonical.
