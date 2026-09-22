@@ -4,11 +4,10 @@
     - GitHub: https://github.com/leanprover-community/mathlib4
     - Blog: https://leanprover-community.github.io/blog
     # - Community information: meet.html
-    # TODO: where should this stay?
-    - Community guidelines: https://leanprover-community.github.io/community_guidelines.html
-    # TODO: re-enable these items in some form (or don't)
+    - Community guidelines: community_guidelines.html
+    # TODO: re-enable this item in some form (or don't)
     # - Teams: teams.html
-    # - Papers about Lean: papers.html
+    - Papers about Lean: papers.html
     - Citing mathlib: cite.html
     - Licence: cite.html#Licence
     # - Projects using Lean: lean_projects.html
@@ -20,7 +19,7 @@
     - Online version (no installation): https://live.lean-lang.org/
     - Install Lean: https://docs.lean-lang.org/lean4/doc/quickstart.html
     # TODO: should this be an item on this page?
-    - More options: https://leanprover-community.github.io/get_started.html
+    - More options: get_started.html
 
 - title: Documentation
   items:

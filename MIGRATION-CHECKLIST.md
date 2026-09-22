@@ -5,8 +5,9 @@ whether it should live on mathlib.org or stay on
 [leanprover-community.github.io](https://leanprover-community.github.io/).
 Synced with the `lean4` branch at `52a665f5` (2026-09-21).
 
-The checked pages are now served at the root of mathlib.org; the unchecked
-ones are not built here and are linked by absolute URL to the other site.
+A checked box means the page is built by `build.sh` and served at the root
+of mathlib.org. An unchecked one is not built here; links to it point at the
+other site by absolute URL.
 
 **Nesting means the parent links to the child** (excluding sidebar navigation links)
 
@@ -19,8 +20,7 @@ ones are not built here and are linked by absolute URL to the other site.
 ## Community and teams
 
 - [ ] `meet.html`
-  - [ ] `community_guidelines.html` — **built and deployed here already**,
-    while the menu links to the other site's copy; resolve one way or the other
+  - [x] `community_guidelines.html`
   - [ ] `teams.html`
     - [ ] `teams/admin.html`
     - [ ] `teams/maintainers.html`
@@ -43,19 +43,18 @@ There are many links between these files so should be migrated together.
 - [x] `contribute/commit.html`
 - [x] `contribute/pr-review.html`
 - [x] `contribute/git.html`
-- [ ] `contribute/tags_and_branches.html` — upstream rewrote this for the
-  lean-downstream repo in #916, so the reason for holding it back is gone and
-  it is now a candidate for migration
+- [ ] `contribute/tags_and_branches.html` — this was rewritten for the
+  lean-downstream repo in #916
 - [x] `mathlib_stats.html`
-- [ ] `queue-redirect.html` — the template was deleted, so this is not
-  built here despite being mathlib-specific
+- [ ] `queue-redirect.html`
 
 ## Library overviews
 
 - [x] `mathlib-overview.html`
   - [x] `undergrad.html`
     - [x] `undergrad_todo.html`
-- [x] `theories.html`
+- [x] `theories.html` — absent from the sidebar, which lists the individual
+  theories instead; reached from `mathlib-overview.html` and `contribute/doc.html`
   - [x] `theories/naturals.html`
   - [x] `theories/sets.html`
   - [x] `theories/linear_algebra.html`
@@ -84,8 +83,7 @@ There are many links between these files so should be migrated together.
 
 ## Getting started and install
 
-- [ ] `get_started.html` — **built and deployed here already**, while the menu
-  links to the other site's copy; resolve one way or the other
+- [x] `get_started.html`
   - [ ] `learn.html`
     - [ ] `events.html`
 - [ ] `install/project.html` -> discuss!
@@ -108,13 +106,15 @@ Do not move (these are just redirects)
 
 ## Papers, citation and projects
 
-- [ ] `papers.html` — **built and deployed here already**, but not linked from
-  the menu; decide whether to migrate it properly or delete the template
+- [x] `papers.html`
 - [x] `cite.html`
 - [ ] `lean_projects.html`
 
 ## Site files
 
+- [ ] ~~`opensearch.xml`~~ Registered the site as a browser search engine
+  against the Lean 3 `mathlib_docs/find/` endpoint, which 404s. Deleted here,
+  along with the `<link rel="search">` in `_base.html` that pointed at it.
 - [ ] ~~`googlef0c00cb4d31b246f.html`~~ For google site verification; we'd have to redo this anyways for mathlib.org
 
 ---
@@ -189,5 +189,3 @@ Pages that must move together, or duplicate a build-time download.
 - Duplicate content — the migrated pages are served by both sites. Held off
   for now with a site-wide noindex; lifting it (`SITE_NOINDEX=0`) means first
   deleting them from the other repository or redirecting those URLs here.
-- `theories.html` is built and deployed but has no menu entry; it is reached
-  only from `mathlib-overview.html` and `contribute/doc.html`.
