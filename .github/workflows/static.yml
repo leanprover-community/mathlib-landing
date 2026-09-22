@@ -62,9 +62,13 @@ jobs:
           # Needed for the GitHub API calls made while building; unauthenticated
           # requests rate-limit.
           GITHUB_TOKEN: ${{ github.token }}
-          # Optional. Without it the community map on meet.html is empty; see
-          # the note in README.md.
-          ZULIP_KEY: ${{ secrets.ZULIP_KEY }}
+          # Currently unread: the Zulip scrape they feed is commented out in
+          # make_site.py along with meet.html, the only page that used it.
+          # Kept so the plumbing is here if that page is migrated. The address
+          # is a variable rather than a secret because it is not sensitive, but
+          # both are needed to authenticate; see README.md.
+          MAP_ZULIP_EMAIL: ${{ vars.MAP_ZULIP_EMAIL }}
+          MAP_ZULIP_KEY: ${{ secrets.MAP_ZULIP_KEY }}
           # Optional. Without it the reviewers team page omits review interests.
           QUEUEBOARD_REVIEWER_INTERESTS_API_URL: ${{ vars.QUEUEBOARD_REVIEWER_INTERESTS_API_URL }}
 

@@ -36,12 +36,13 @@ jobs:
       - name: Build
         id: build
         # Secrets are not available to pull requests from forks; build.sh
-        # unsets the empty values that produces, so the build degrades (an
-        # empty community map) rather than failing.
+        # unsets the empty values that produces. Nothing reads the MAP_ZULIP_*
+        # pair at present -- see the note beside them in static.yml.
         run: ./build.sh
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          ZULIP_KEY: ${{ secrets.ZULIP_KEY }}
+          MAP_ZULIP_EMAIL: ${{ vars.MAP_ZULIP_EMAIL }}
+          MAP_ZULIP_KEY: ${{ secrets.MAP_ZULIP_KEY }}
           QUEUEBOARD_REVIEWER_INTERESTS_API_URL: ${{ vars.QUEUEBOARD_REVIEWER_INTERESTS_API_URL }}
 
       - name: Upload artifact

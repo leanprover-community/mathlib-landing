@@ -62,9 +62,12 @@ repositories that only happen to be served next to the original site, so they
 must not move with `SITE_BASE_URL`. The API documentation was in that category
 too, until it needed a variable of its own; see `SITE_DOCS_URL` above.
 
-If you want to retrieve the list of Zulip users to get the users map, the
-environment variable `ZULIP_KEY` should be set with the Zulip API key of the
-map scraper bot.
+If you want to retrieve the list of Zulip users to get the users map, set
+`MAP_ZULIP_EMAIL` to the address of the bot doing the scraping and
+`MAP_ZULIP_KEY` to that same bot's Zulip API key; a key paired with any other
+address is rejected. Both have no effect here for now: that scrape is
+commented out in `make_site.py` along with `meet.html`, the only page that
+draws the map.
 
 If you want to work on a new feature, there are several helpful tricks to know.
 
