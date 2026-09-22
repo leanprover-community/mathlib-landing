@@ -18,7 +18,6 @@
   items:
     - Online version (no installation): https://live.lean-lang.org/
     - Install Lean: https://docs.lean-lang.org/lean4/doc/quickstart.html
-    # TODO: should this be an item on this page?
     - More options: get_started.html
 
 - title: Documentation
