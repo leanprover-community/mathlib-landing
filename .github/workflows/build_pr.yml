@@ -21,7 +21,8 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          # TODO: community/make_site.py does not build on 3.12 and above yet
+          # Pinned rather than required: 3.11, 3.13 and 3.14 were checked to
+          # produce byte-identical output from the same requirements.txt.
           python-version: '3.11'
 
       - name: Install bibtool

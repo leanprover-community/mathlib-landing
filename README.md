@@ -5,8 +5,8 @@ subset of [leanprover-community.github.io](https://github.com/leanprover-communi
 that has been migrated here, served at the root.
 
 The sources still live in `community/`, which is where the copy landed and
-which keeps `git archive`-based re-syncing from the other repository a
-one-liner. The directory name no longer corresponds to a URL prefix.
+which keeps the two trees comparable with `diff -r`. The directory name no
+longer corresponds to a URL prefix.
 
 ## Migration status
 
@@ -30,10 +30,14 @@ Google free to index the URLs regardless.
 `community/` is a copy of that repository's `lean4` branch, last synced at
 `52a665f5`, with these deliberate exceptions:
 
-- `.github/` is not copied. Its workflows deploy to the other repository's
-  `master` branch, announce pull requests to Zulip, and reconcile emoji
-  against `leanprover-community/leanprover-community.github.io`, none of which
-  should happen from here.
+- `.github/` is not copied, and neither is `deploy.sh`. They deploy to the
+  other repository's `master` branch, announce pull requests to Zulip, and
+  reconcile emoji against
+  `leanprover-community/leanprover-community.github.io`, none of which should
+  happen from here.
+- `README.md` is this repository's, not that one's, and `robots.txt` and
+  `opensearch.xml` are deleted: `build.sh` writes the former, and the latter
+  pointed browser search at a Lean 3 endpoint that 404s.
 - The templates and data files for pages that were not migrated are deleted,
   and `make_site.py` has the code that reads them commented out.
 - `data/menus.yaml` links to the unmigrated pages by absolute URL, and so do
@@ -64,7 +68,9 @@ from disk.
 
 ### Dependencies
 
-- Python 3.11 (`community/make_site.py` does not build on 3.12 or above yet)
+- Python 3.11, as CI pins. 3.13 and 3.14 were checked to produce
+  byte-identical output from the same `requirements.txt`, so the pin is
+  conservative rather than required.
 - `pip install -r community/requirements.txt`
 - [`bibtool`](https://github.com/ge-ne/bibtool), optional: without it the build
   prints a warning and copies `lean.bib` unprocessed.
@@ -75,16 +81,20 @@ access and takes a few minutes. `community/data/header-data.json` alone
 expands to about 1.1 GB. Setting `NODOWNLOAD=1` reuses whatever
 `community/data_cache/` already holds, which is much faster.
 
-Three optional variables improve the result and are all safe to omit:
+Three optional variables are all safe to omit, and only the first still
+changes the output:
 
 | Variable | Without it |
 | --- | --- |
 | `GITHUB_TOKEN` | API rate limits are hit quickly |
-| `ZULIP_KEY` | unused while `meet.html` is not migrated |
-| `QUEUEBOARD_REVIEWER_INTERESTS_API_URL` | unused while the reviewers team page is not migrated |
+| `ZULIP_KEY` | no effect; the Zulip scrape it enables feeds only `meet.html`, which is not built here, so its result is discarded |
+| `QUEUEBOARD_REVIEWER_INTERESTS_API_URL` | no effect; likewise for the reviewers team page |
+
+CI still passes the latter two. They cost an API call each and are worth
+keeping only because the pages that use them are candidates for migration.
 
 Two more control where the build points rather than what it contains:
-`SITE_DOCS_URL` (above) and `SITE_NOINDEX`.
+`SITE_DOCS_URL` and `SITE_NOINDEX`, both described below.
 
 `build.sh` unsets the first two when they are set but empty, which is what
 GitHub Actions passes for a secret that has not been configured.
@@ -110,9 +120,8 @@ The generated API documentation is a separate site and has its own variable,
 link on `100.html`, `1000.html`, `undergrad.html` and `mathlib-overview.html`
 is built from it. Point it elsewhere if mathlib.org ever serves its own copy.
 
-One thing does not go through either: `make_site.py` copies
-`community/robots.txt` into the output, and that file is the other site's.
-`build.sh` overwrites it afterwards.
+`robots.txt` is the one file `make_site.py` does not produce: `build.sh`
+writes it directly, after the build.
 
 ## Known gaps
 
@@ -121,8 +130,10 @@ One thing does not go through either: `make_site.py` copies
 - **Branding.** The front page, its title and the sidebar brand still say
   "Lean community"; the page that said "Mathlib" was the landing page this
   replaced.
-- **Orphan pages.** `community_guidelines.html`, `get_started.html`,
-  `papers.html` and `theories.html` are built and deployed, but
-  `data/menus.yaml` links to the other site's copies of the first two and does
-  not link the third at all. Either migrate them properly or delete their
-  templates.
+- **`theories.html` is not in the sidebar.** It is built and reachable, but
+  only from `mathlib-overview.html` and `contribute/doc.html`; the sidebar
+  lists the individual theory pages instead.
+- **`cite.html` points at the wrong licence.** It says this website is under
+  the MIT licence, linking the other repository's `LICENSE`. That file is
+  copied here as `community/LICENSE`, but this repository has no licence of
+  its own at the root.
