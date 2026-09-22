@@ -2,10 +2,9 @@
 
 This directory holds the pages migrated from
 [leanprover-community.github.io](https://github.com/leanprover-community/leanprover-community.github.io)
-and the `make_site.py` that builds them. It is not a site of its own: the
-build is driven by [`../build.sh`](../build.sh) and the result is served at the
-root of <https://mathlib.org>. The directory name is where the copy landed and
-no longer corresponds to a URL prefix.
+and the script `make_site.py` that builds them.
+The build is driven by [`../build.sh`](../build.sh) and the result is served at the
+root of <https://mathlib.org>.
 
 **See [`../README.md`](../README.md)** for how the site is built and deployed,
 and for how this copy is kept in sync with the other repository.
