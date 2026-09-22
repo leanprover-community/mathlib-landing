@@ -1,2 +1,0 @@
-User-agent: *
-Disallow: /mathlib_docs_demo/

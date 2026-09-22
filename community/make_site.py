@@ -989,7 +989,9 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
             mergecontexts=True,
             template_filter=template_filter)
 
-    # TODO: uncomment if/when the corresponding team page is moved over
+    # TODO: uncomment if/when the corresponding team page is moved over.
+    # templates/_team.html and data/teams_intro.md were deleted with the rest
+    # of the unmigrated pages and need restoring from the other repository.
     # # Now build the individual team pages
     # (target/'teams').mkdir(exist_ok=True)
     # env = Environment(loader=FileSystemLoader('templates'))
@@ -1007,7 +1009,8 @@ def render_site(target: Path, base_url: str, edit_base: str = DEFAULT_EDIT_BASE,
     # The Google site-verification file was not migrated: mathlib.org needs its
     # own, and this one verifies leanprover-community.github.io.
     # subprocess.call(['rsync', '-a', 'googlef0c00cb4d31b246f.html', str(target).rstrip('/')])
-    subprocess.call(['rsync', '-a', 'robots.txt', str(target).rstrip('/')])
+    # robots.txt is written by ../build.sh, which decides what mathlib.org
+    # serves; the copy that used to live here was the old site's.
 
     site.render(use_reloader=reloader)
 
