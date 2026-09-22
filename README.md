@@ -50,20 +50,27 @@ dropping the hunks for files that were deliberately deleted here, and update the
 
 The build downloads data from the GitHub API, the mathlib4 docs, `mathlib_stats`, 1000+ theorems and the review dashboard, so it needs network access and takes a few minutes. `community/data/header-data.json` alone expands to about 1.1 GB. Setting `NODOWNLOAD=1` reuses whatever `community/data_cache/` already holds, which is much faster.
 
-Three optional variables are currently safe to omit, and only the first still changes the output:
+Four optional variables are currently safe to omit, and only the first still changes the output:
 
 | Variable | Without it |
 | --- | --- |
 | `GITHUB_TOKEN` | API rate limits are hit quickly |
-| `ZULIP_KEY` | no effect; the Zulip scrape it enables feeds only `meet.html`, which is not built here, so its result is discarded |
+| `MAP_ZULIP_EMAIL` | no effect; the Zulip scrape this and `MAP_ZULIP_KEY` enabled is commented out alongside `meet.html`, its only consumer, so nothing reads either |
+| `MAP_ZULIP_KEY` | as above, and the two are only useful together |
 | `QUEUEBOARD_REVIEWER_INTERESTS_API_URL` | no effect; likewise for the reviewers team page |
 
-CI still passes the latter two in case we decide to migrate those pages later.
+CI still passes the latter three in case we decide to migrate those pages later.
 
 Two more variables control where the build points: `SITE_DOCS_URL` and `SITE_NOINDEX`, both described below.
 
-`build.sh` unsets `GITHUB_TOKEN` and `ZULIP_KEY` when they are set but empty, which is what GitHub Actions passes for a secret that has not been configured.
-`make_site.py` tests whether `ZULIP_KEY` is present rather than whether it is usable, so without that an unconfigured secret would fail the build instead of degrading.
+`build.sh` unsets `GITHUB_TOKEN`, `MAP_ZULIP_EMAIL` and `MAP_ZULIP_KEY` when they are set but empty, which is what GitHub Actions passes for a secret or variable that has not been configured.
+`make_site.py` tests whether they are present rather than whether they are usable, so without that an unconfigured pair would reach the Zulip API with an empty address and no credentials.
+
+The map needs both halves because Zulip authenticates with the bot address as the basic-auth user and its key as the password. A mismatched pair is rejected exactly as a bad key is, and Zulip reports that rejection in an ordinary response body rather than an error status, so the scrape failed the whole build on `KeyError: 'members'` instead of emptying the map. That is why it is commented out rather than left to degrade; re-enabling it should check the response's `result` field.
+
+`MAP_ZULIP_EMAIL` is a repository variable rather than a secret because a bot address is not sensitive, and it has no default in the code deliberately. The original site scrapes with `map-scraper-bot@leanprover.zulipchat.com`, whose key this repository does not hold, and hardcoding that address is precisely what turned an unrelated key into a failed deploy. Point it at whichever bot owns the key in `MAP_ZULIP_KEY`; Zulip shows an address and its key together under the bot in its settings.
+
+The scrape also reads four hardcoded Zulip custom profile field IDs, which are numeric and specific to the `leanprover` realm because Zulip tracks those fields by ID rather than by name. They fail silently rather than loudly: a stale ID drops a user's website and GitHub links, and a stale coordinate field drops that user from the map entirely. If the map ever comes back sparse or empty without an error, check those IDs first.
 
 ## Deployment
 

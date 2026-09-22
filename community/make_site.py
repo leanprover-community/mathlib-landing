@@ -29,6 +29,8 @@ from github import Github
 from github.Auth import Token
 from slugify import slugify
 
+# Unused while the community map is commented out below, and kept so that
+# re-enabling it is a single change.
 import zulip
 
 FilePath = Union[str, Path]
@@ -105,7 +107,11 @@ TEMPLATE_SRC = str(ROOT/'templates')
 # script. All internal links are formed by appending to base_url, so pointing
 # it elsewhere relocates the whole site.
 DEFAULT_BASE_URL = 'https://leanprover-community.github.io/'
-DEFAULT_EDIT_BASE = 'https://github.com/leanprover-community/leanprover-community.github.io/blob/lean4/templates/'
+# The edit links point at this repository, which is where these templates live
+# now. build.sh passes the same value, so CI never falls back to this default,
+# but running make_site.py directly -- as community/README.md describes -- would
+# otherwise offer to edit the other repository's copies of these files.
+DEFAULT_EDIT_BASE = 'https://github.com/leanprover-community/mathlib-landing/blob/main/community/templates/'
 
 # The generated API documentation is not part of this site. Links into it used
 # to be formed as site-root-relative '/mathlib4_docs/...' paths, which resolved
@@ -776,71 +782,88 @@ paper_lists = [('Papers about Lean',
                     key=lambda e: e.fields['year'],
                     reverse=True))]
 
-@dataclass
-class User:
-    fullname: str
-    lon: float
-    lat: float
-    github: Optional[str] = None
-    website: Optional[str] = None
+# TODO: uncomment this if/when meet.html is moved over. This builds the
+# community map on that page, which is the only thing that reads it, so the
+# Zulip request is skipped entirely until then: it made every build depend on
+# a bot credential this repository does not hold, and a key Zulip rejects
+# comes back as a normal response body, so it failed the whole deploy on a
+# KeyError rather than just emptying the map.
+#
+# Both MAP_ZULIP_EMAIL and MAP_ZULIP_KEY are required, with no default for
+# either: Zulip authenticates with the bot address as the basic-auth user and
+# the key as the password, so a key paired with the wrong address is rejected
+# just as a bad key is, and hardcoding an address would rebuild that trap.
+# See README.md, and check the response's `result` field when re-enabling.
+# @dataclass
+# class User:
+#     fullname: str
+#     lon: float
+#     lat: float
+#     github: Optional[str] = None
+#     website: Optional[str] = None
 
-if DOWNLOAD and 'ZULIP_KEY' in os.environ:
-    client = zulip.Client(
-        email='map-scraper-bot@leanprover.zulipchat.com',
-        site='https://leanprover.zulipchat.com',
-        api_key=os.environ.get('ZULIP_KEY'))
-else:
-    client = None
+# if DOWNLOAD and 'MAP_ZULIP_EMAIL' in os.environ and 'MAP_ZULIP_KEY' in os.environ:
+#     client = zulip.Client(
+#         email=os.environ['MAP_ZULIP_EMAIL'],
+#         site='https://leanprover.zulipchat.com',
+#         api_key=os.environ['MAP_ZULIP_KEY'])
+# else:
+#     client = None
 
-# Zulip custom profile fields are tracked by ID, not by name
-profile_data_fields = {
-    'website': '5151',
-    'latitude': '5148',
-    'longitude': '5149',
-    'github': '3658'
-}
+# # Zulip custom profile fields are tracked by ID, not by name, so these are
+# # specific to the leanprover realm and go stale silently: get_user_field
+# # returns None for an ID that no longer exists, which drops the website and
+# # github links, and makes the float() calls below raise, so that user is
+# # skipped altogether. A sparse or empty map with no error is the symptom;
+# # check these against the realm's custom profile fields before anything else.
+# profile_data_fields = {
+#     'website': '5151',
+#     'latitude': '5148',
+#     'longitude': '5149',
+#     'github': '3658'
+# }
 
-def get_user_field(user, field):
-    field_id = profile_data_fields[field]
-    try:
-        return user['profile_data'][field_id]['value']
-    except KeyError:
-        return None
+# def get_user_field(user, field):
+#     field_id = profile_data_fields[field]
+#     try:
+#         return user['profile_data'][field_id]['value']
+#     except KeyError:
+#         return None
 
 
-def httpize_website(user):
-    website = get_user_field(user, 'website')
-    if website is not None and not website.startswith('http'):
-        return 'https://' + website
-    else:
-        return website
+# def httpize_website(user):
+#     website = get_user_field(user, 'website')
+#     if website is not None and not website.startswith('http'):
+#         return 'https://' + website
+#     else:
+#         return website
 
-if client is None:
-    # Here we don't use pkl_load because its potential failure
-    # message would be confusing in the absence of a Zulip API key.
-    if (DATA_CACHE/'users').exists():
-        with open(DATA_CACHE/'users', 'rb') as pkl:
-            users = pickle.load(pkl)
-    else:
-        print(f"Warning: Could not find Zulip authentication information and couldn't find previously downloaded data. \nWill use an empty users list.")
-        users = []
-else:
-    users = []
-    for user in client.get_members({"include_custom_profile_fields": True})['members']:
-        if user['is_bot'] or not user['is_active']:
-            continue
-        try:
-            lat = float(get_user_field(user, 'latitude'))
-            lon = float(get_user_field(user, 'longitude'))
-        except Exception:
-            continue
-        users.append(User(
-            fullname=user['full_name'],
-            lon=lon,
-            lat=lat,
-            github=get_user_field(user, 'github'),
-            website=httpize_website(user)))
-    pkl_dump('users', users)
+# if client is None:
+#     # Here we don't use pkl_load because its potential failure
+#     # message would be confusing in the absence of a Zulip API key.
+#     if (DATA_CACHE/'users').exists():
+#         with open(DATA_CACHE/'users', 'rb') as pkl:
+#             users = pickle.load(pkl)
+#     else:
+#         print(f"Warning: Could not find Zulip authentication information and couldn't find previously downloaded data. \nWill use an empty users list.")
+#         users = []
+# else:
+#     users = []
+#     for user in client.get_members({"include_custom_profile_fields": True})['members']:
+#         if user['is_bot'] or not user['is_active']:
+#             continue
+#         try:
+#             lat = float(get_user_field(user, 'latitude'))
+#             lon = float(get_user_field(user, 'longitude'))
+#         except Exception:
+#             continue
+#         users.append(User(
+#             fullname=user['full_name'],
+#             lon=lon,
+#             lat=lat,
+#             github=get_user_field(user, 'github'),
+#             website=httpize_website(user)))
+#     pkl_dump('users', users)
 
 class LeanSite(Site):
     """

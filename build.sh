@@ -22,12 +22,14 @@ mkdir -p "$root/_site"
 
 echo "🌍 Building site for $SITE_URL/ ..."
 
-# GitHub Actions sets a secret that has not been configured to the empty
-# string, and make_site.py tests for the presence of these variables rather
-# than for a usable value: an empty ZULIP_KEY sends it to the Zulip API with no
-# credentials. Unset them so it takes its no-credentials path instead.
+# GitHub Actions sets a secret or variable that has not been configured to the
+# empty string, and make_site.py tests for the presence of these variables
+# rather than for a usable value: an empty MAP_ZULIP_* pair would send the
+# Zulip API an empty address and no credentials. Unset them so it takes its
+# no-credentials path instead.
 [ -n "${GITHUB_TOKEN:-}" ] || unset GITHUB_TOKEN
-[ -n "${ZULIP_KEY:-}" ] || unset ZULIP_KEY
+[ -n "${MAP_ZULIP_EMAIL:-}" ] || unset MAP_ZULIP_EMAIL
+[ -n "${MAP_ZULIP_KEY:-}" ] || unset MAP_ZULIP_KEY
 
 # make_site.py copies css/, js/, img/ and papers/ using paths relative to the
 # working directory, so it has to run from inside community/.
