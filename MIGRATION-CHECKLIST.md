@@ -177,7 +177,8 @@ Pages that must move together, or duplicate a build-time download.
   `teams/maintainers.html`, `teams/reviewers.html`, `teams/ci.html`,
   `teams/moderation.html`, `teams/coc.html`, `teams/site.html`
 - GitHub API star counts — `lean_projects.html`
-- `ZULIP_KEY` — `meet.html`
+- `MAP_ZULIP_EMAIL` + `MAP_ZULIP_KEY` — `meet.html` (the scrape is commented
+  out in `make_site.py`; neither is configured, and the bot to use is undecided)
 - `QUEUEBOARD_REVIEWER_INTERESTS_API_URL` — `teams/reviewers.html`
 - `mathlib_stats` contributor count and `gitstats.js` — `mathlib_stats.html`
 

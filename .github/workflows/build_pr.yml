@@ -35,13 +35,13 @@ jobs:
 
       - name: Build
         id: build
-        # Secrets are not available to pull requests from forks; build.sh
-        # unsets the empty values that produces, so the build degrades (an
-        # empty community map) rather than failing.
+        # The MAP_ZULIP_* pair that static.yml passes is deliberately left out:
+        # this job runs the pull request's own code, so it is given no
+        # credentials it does not need. Nothing reads the pair at present, and
+        # if meet.html is migrated, pull request builds will draw an empty map.
         run: ./build.sh
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          ZULIP_KEY: ${{ secrets.ZULIP_KEY }}
           QUEUEBOARD_REVIEWER_INTERESTS_API_URL: ${{ vars.QUEUEBOARD_REVIEWER_INTERESTS_API_URL }}
 
       - name: Upload artifact

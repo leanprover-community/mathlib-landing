@@ -48,7 +48,10 @@ defaults, so running `make_site.py` directly needs none of them:
   slash is added if missing. It is ignored when `--local` is passed, which
   derives a `file://` url from `SITE_TARGET` instead.
 * `SITE_EDIT_BASE`: prefix for the "Suggest edits to this page on GitHub"
-  footer link, which points at the templates rather than at the built site.
+  footer link, which points at the templates rather than at the built site
+  (default
+  `https://github.com/leanprover-community/mathlib-landing/blob/main/community/templates/`,
+  where these templates live; `../build.sh` passes the same value).
 * `SITE_DOCS_URL`: where the generated API documentation is served
   (default `https://leanprover-community.github.io/mathlib4_docs/`). Every
   declaration link on `100.html`, `1000.html`, `undergrad.html` and
@@ -62,9 +65,12 @@ repositories that only happen to be served next to the original site, so they
 must not move with `SITE_BASE_URL`. The API documentation was in that category
 too, until it needed a variable of its own; see `SITE_DOCS_URL` above.
 
-If you want to retrieve the list of Zulip users to get the users map, the
-environment variable `ZULIP_KEY` should be set with the Zulip API key of the
-map scraper bot.
+If you want to retrieve the list of Zulip users to get the users map, set
+`MAP_ZULIP_EMAIL` to the address of the bot doing the scraping and
+`MAP_ZULIP_KEY` to that same bot's Zulip API key; a key paired with any other
+address is rejected. Both have no effect here for now: that scrape is
+commented out in `make_site.py` along with `meet.html`, the only page that
+draws the map.
 
 If you want to work on a new feature, there are several helpful tricks to know.
 
