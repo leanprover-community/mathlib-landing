@@ -9,13 +9,13 @@ The sources live in `community/`, and can be compared to the source repo using `
 
 See [MIGRATION-CHECKLIST.md](./MIGRATION-CHECKLIST.md) for a list of pages and their status in this repo.
 
-Currently both sites serve the migrated pages.
-Until the switch is completed, very page built here contains a `<meta name="robots" content="noindex">` tag so that only the established copy appears in search results.
-Set `SITE_NOINDEX=0` to remove this tag.
+Currently both sites serve most of the migrated pages. The other site is replacing its copies with redirects here, starting with the style guide and naming conventions in [leanprover-community.github.io#920](https://github.com/leanprover-community/leanprover-community.github.io/pull/920).
 
-`robots.txt` deliberately allows crawling: a crawler has to fetch a page to see its noindex tag, so disallowing would hide the instruction and leave Google free to index the URLs regardless.
+Search engines may index every page here. The pages used to carry a `<meta name="robots" content="noindex">` tag while the other copy was the established one, but that cannot coexist with the redirects: Google follows a redirect to its target, and a noindex target drops the page from search results under both URLs. While both copies of a page are still live, search engines pick one of them to show.
 
-`community/` is a copy of that repository's `lean4` branch, last synced at `52a665f5`, with these deliberate exceptions:
+`robots.txt` allows everything. A `Disallow` would not keep a page out of search results in any case: it stops crawlers reading the page, and Google may still list the URL.
+
+`community/` is a copy of that repository's `lean4` branch, last synced at `1a73fa0c`, with these deliberate exceptions:
 
 - `.github/` is not copied, and neither is `deploy.sh`.
 - `README.md` is this repository's, not that one's, and `robots.txt` and `opensearch.xml` are deleted: `build.sh` writes the former, and the latter pointed browser search at a Lean 3 endpoint that 404s.
@@ -28,7 +28,7 @@ Re-syncing is not a plain overwrite any more, because that would restore the del
 
 ```
 ( cd ../leanprover-community.github.io
-  git diff 52a665f5..lean4 ) | git apply --3way --directory=community
+  git diff 1a73fa0c..lean4 -- . ':!.github' ':!deploy.sh' ) | git apply --3way --directory=community
 ```
 
 dropping the hunks for files that were deliberately deleted here, and update the commit named above.
@@ -62,7 +62,7 @@ Four optional variables are currently safe to omit, and only the first still cha
 The deploy workflow still passes the latter three in case we decide to migrate those pages later.
 Pull request builds pass only `QUEUEBOARD_REVIEWER_INTERESTS_API_URL`: they run the pull request's own code, so they are not given the Zulip key.
 
-Two more variables control where the build points: `SITE_DOCS_URL` and `SITE_NOINDEX`, both described below.
+Two more variables control where the build points, `SITE_URL` and `SITE_DOCS_URL`; both are described below.
 
 `build.sh` unsets `GITHUB_TOKEN`, `MAP_ZULIP_EMAIL` and `MAP_ZULIP_KEY` when they are set but empty, which is what GitHub Actions passes for a secret or variable that has not been configured.
 `make_site.py` tests whether they are present rather than whether they are usable, so without that an unconfigured pair would reach the Zulip API with an empty address and no credentials.
@@ -90,5 +90,5 @@ It is used to form every declaration link on `100.html`, `1000.html`, `undergrad
 ## Known gaps
 
 - **Google site verification.** `googlef0c00cb4d31b246f.html` verifies the other site and was not migrated; mathlib.org needs its own.
-- **Branding.** The front page, its title and the sidebar brand still say "Lean community"; the page that said "Mathlib" was the landing page this replaced.
+- **Branding.** The front page, its title and the sidebar brand still say "Lean community"; the page that said "Mathlib" was the landing page this replaced. Now that the site is indexed, that front page competes in search results with the community site's own.
 - **`theories.html` is not in the sidebar.** It is built and reachable, but only from `mathlib-overview.html` and `contribute/doc.html`; the sidebar lists the individual theory pages instead.
