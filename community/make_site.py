@@ -785,9 +785,9 @@ paper_lists = [('Papers about Lean',
 # TODO: uncomment this if/when meet.html is moved over. This builds the
 # community map on that page, which is the only thing that reads it, so the
 # Zulip request is skipped entirely until then: it made every build depend on
-# a bot credential this repository does not hold, and a key Zulip rejects
-# comes back as a normal response body, so it failed the whole deploy on a
-# KeyError rather than just emptying the map.
+# a bot credential this repository does not hold, and the zulip client returns
+# the 401 for a rejected key as an ordinary response dict rather than raising,
+# so it failed the whole deploy on a KeyError rather than just emptying the map.
 #
 # Both MAP_ZULIP_EMAIL and MAP_ZULIP_KEY are required, with no default for
 # either: Zulip authenticates with the bot address as the basic-auth user and

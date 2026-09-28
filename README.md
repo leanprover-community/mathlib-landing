@@ -59,14 +59,15 @@ Four optional variables are currently safe to omit, and only the first still cha
 | `MAP_ZULIP_KEY` | as above, and the two are only useful together |
 | `QUEUEBOARD_REVIEWER_INTERESTS_API_URL` | no effect; likewise for the reviewers team page |
 
-CI still passes the latter three in case we decide to migrate those pages later.
+The deploy workflow still passes the latter three in case we decide to migrate those pages later.
+Pull request builds pass only `QUEUEBOARD_REVIEWER_INTERESTS_API_URL`: they run the pull request's own code, so they are not given the Zulip key.
 
 Two more variables control where the build points: `SITE_DOCS_URL` and `SITE_NOINDEX`, both described below.
 
 `build.sh` unsets `GITHUB_TOKEN`, `MAP_ZULIP_EMAIL` and `MAP_ZULIP_KEY` when they are set but empty, which is what GitHub Actions passes for a secret or variable that has not been configured.
 `make_site.py` tests whether they are present rather than whether they are usable, so without that an unconfigured pair would reach the Zulip API with an empty address and no credentials.
 
-The map needs both halves because Zulip authenticates with the bot address as the basic-auth user and its key as the password. A mismatched pair is rejected exactly as a bad key is, and Zulip reports that rejection in an ordinary response body rather than an error status, so the scrape failed the whole build on `KeyError: 'members'` instead of emptying the map. That is why it is commented out rather than left to degrade; re-enabling it should check the response's `result` field.
+The map needs both halves because Zulip authenticates with the bot address as the basic-auth user and its key as the password. A mismatched pair is rejected exactly as a bad key is, with a 401, but the `zulip` client returns that error response as an ordinary dict rather than raising, so the scrape failed the whole build on `KeyError: 'members'` instead of emptying the map. That is why it is commented out rather than left to degrade; re-enabling it should check the response's `result` field.
 
 `MAP_ZULIP_EMAIL` is a repository variable rather than a secret because a bot address is not sensitive, and it has no default in the code deliberately. The original site scrapes with `map-scraper-bot@leanprover.zulipchat.com`, whose key this repository does not hold, and hardcoding that address is precisely what turned an unrelated key into a failed deploy. Point it at whichever bot owns the key in `MAP_ZULIP_KEY`; Zulip shows an address and its key together under the bot in its settings.
 
