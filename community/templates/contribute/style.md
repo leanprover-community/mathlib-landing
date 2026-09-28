@@ -1,7 +1,7 @@
 # Library Style Guidelines
 
 In addition to the [naming conventions](naming.html),
-files in the Lean library generally adhere to the following guidelines
+files in Mathlib generally adhere to the following guidelines
 and conventions. Having a uniform style makes it easier to browse the
 library and read the contents, but these are meant to be guidelines
 rather than rigid rules.
