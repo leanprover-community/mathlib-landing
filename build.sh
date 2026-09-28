@@ -39,11 +39,9 @@ SITE_BASE_URL="$SITE_URL/" \
 SITE_EDIT_BASE="https://github.com/leanprover-community/mathlib-landing/blob/main/community/templates/" \
   "$PYTHON" ./make_site.py
 
-# Note this deliberately allows crawling. Every page carries a noindex meta tag
-# while leanprover-community.github.io serves the same pages (see SITE_NOINDEX
-# in make_site.py), and a crawler has to fetch a page to see that tag: a
-# Disallow here would hide the very instruction that keeps these pages out of
-# search results, and Google would be free to index the URLs anyway.
+# Allow everything. leanprover-community.github.io redirects its copies of the
+# migrated pages here, and a redirect only keeps a page in search results if
+# its target can be crawled and indexed.
 echo "🤖 Writing robots.txt..."
 cat > "$root/_site/robots.txt" <<'EOF'
 User-agent: *
