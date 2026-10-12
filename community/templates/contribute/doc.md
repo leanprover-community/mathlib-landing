@@ -9,7 +9,7 @@ using the [Lean doc preview page](https://observablehq.com/@bryangingechen/githu
 
 ## Header comment
 
-Each mathlib file should start with:
+Each mathlib file should start with (in order):
 
 * a header comment with copyright information (see the [recommendations in our style guidelines](style.html#copyright-header))
 * the `module` token
