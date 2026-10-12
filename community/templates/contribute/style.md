@@ -46,13 +46,13 @@ will indicate a 100 character limit.
 
 The file header should contain copyright information, a list of all
 the authors who have made significant contributions to the file, the imports, and
-a description of the file's contents.
+a description of the file's contents. All files should be `module`s.
 
 As a minimal example:
 
 ```lean
 /-
-Copyright (c) 2024 Joe Cool. All rights reserved.
+Copyright (c) 2026 Joe Cool. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Joe Cool
 -/
