@@ -42,15 +42,13 @@ easier to read, especially on a small screen or in a small window.
 If you are editing with VS Code, there is a visual marker which
 will indicate a 100 character limit.
 
-### Header and imports
+### Module Headers
 
 The file header should contain copyright information, a list of all
-the authors who have made significant contributions to the file, and
-a description of the contents.
-Put the `module` keyword on its own line right after the header, skip a line,
-then group all `public import`s together, skip another line,
-then group all `import`s together,
-Try to keep the imports alphabetical within each block of imports.
+the authors who have made significant contributions to the file, the imports, and
+a description of the file's contents.
+
+As a minimal example:
 
 ```lean
 /-
@@ -64,7 +62,18 @@ public import Mathlib.Logic.Defs
 
 import Mathlib.Algebra.Group.Defs
 import Mathlib.Data.Nat.Basic
+
+/-!
+# Cool modules
+
+This file formalizes Cool modules.
+
+...
+
+-/
 ```
+
+#### Copyright header
 
 (Tip: If you're editing mathlib in VS Code, you can write `copy`
 and then press <kbd>TAB</kbd> to generate a skeleton of the copyright header.)
@@ -76,11 +85,32 @@ We don't have strict rules on what contributions qualify for inclusion there.
 The general idea is that the people listed there should be the ones we would
 reach out to if we had questions about the design or development of the Lean code.
 
-Note that there are less common combinations of keywords such as `public meta import` or
-`import all`.
-Given their rarity, we do not yet prescribe their relative location within the import statements.
+#### Imports
 
-### Module docstrings
+Put the `module` keyword on its own line right after the copyright header.
+
+Skip a line, then group all `public import`s together; skip another line, then group all `import`s together. (If any `import all`s are present, skip another line and group them together.)
+
+Put any `meta` imports at the top of each group formed in this way, without skipping a line between `meta` and non-`meta` imports. (Note: usually, `meta` imports will only appear in files defining tactics or notation. Tactics themselves should generally not be `meta`-imported into theory files; ordinary imports suffice.)
+
+Keep the imports alphabetical within each (sub)block.
+
+```lean
+module
+
+public meta import Lean.Elab.ConfigEval
+public meta import Lean.Elab.Tactic.Rewrite
+public import Mathlib.Tactic.GRewrite.Core
+
+meta import Mathlib.Tactic.NormNum.Basic
+import Lean.Elab.Command
+
+import all Lean.Syntax
+```
+
+Note: the header linter offers a clickable suggestion to format imports according to the style convention.
+
+#### Module docstrings
 
 After the copyright header and the imports,
 please add a module docstring (delimited with `/-!` and `-/`) containing
@@ -115,6 +145,8 @@ two main concepts in the theory of xyzzyology.
 See [Thales600BC] for the original account on Xyzzyology.
 -/
 ```
+
+(Tip: If you're editing mathlib in VS Code, you can write `m` (and optionally the rest of `module docstring`) and then press <kbd>TAB</kbd> to generate a skeleton of the module docstring with markdown sections.)
 
 New bibliography entries should be added to `docs/references.bib`.
 
