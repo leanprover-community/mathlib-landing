@@ -42,7 +42,7 @@ easier to read, especially on a small screen or in a small window.
 If you are editing with VS Code, there is a visual marker which
 will indicate a 100 character limit.
 
-### Module Headers
+### Module headers
 
 The file header should contain copyright information, a list of all
 the authors who have made significant contributions to the file, the imports, and
@@ -113,9 +113,9 @@ Note: the header linter offers a clickable suggestion to format imports accordin
 #### Module docstrings
 
 After the copyright header and the imports,
-please add a module docstring (delimited with `/-!` and `-/`) containing
+please add a module docstring (delimited with `/-!` and `-/`, which should each be on their own line) containing
 
-- a title of the file,
+- a title of the file
 - a summary of the contents (the main definitions and theorems, proof techniques, etc…)
 - notation that has been used in the file (if any)
 - references to the literature (if any)

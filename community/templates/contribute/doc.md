@@ -10,11 +10,12 @@ using the [Lean doc preview page](https://observablehq.com/@bryangingechen/githu
 ## Header comment
 
 Each mathlib file should start with:
-* a header comment with copyright information (see the [recommendations in our style guidelines](style.html#copyright-header));
+
+* a header comment with copyright information (see the [recommendations in our style guidelines](style.html#copyright-header))
 * the `module` token
-* the list of imports ([grouped and sorted](style.html#imports));
+* the list of imports ([grouped and sorted](style.html#imports))
 * a [module docstring](style.html#module-docstrings) containing general documentation, written
-  [using Markdown and LaTeX](#latex-and-markdown).
+  [using Markdown and LaTeX](#latex-and-markdown)
 
 (See the example below.)
 
