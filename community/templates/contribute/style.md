@@ -75,8 +75,11 @@ This file formalizes Cool modules.
 
 #### Copyright header
 
-(Tip: If you're editing mathlib in VS Code, you can write `copy`
-and then press <kbd>TAB</kbd> to generate a skeleton of the copyright header.)
+<div class="alert alert-info">
+
+**Tip:** If you're editing mathlib in VS Code, you can write `copy` and then press <kbd>TAB</kbd> to generate a skeleton of the copyright header.
+
+</div>
 
 Regarding the list of authors: use `Authors` even when there is only a single author.
 Don't end the line with a period, and use commas (`, `) to separate all author names
@@ -146,7 +149,11 @@ See [Thales600BC] for the original account on Xyzzyology.
 -/
 ```
 
-(Tip: If you're editing mathlib in VS Code, you can write `m` (and optionally the rest of `module docstring`) and then press <kbd>TAB</kbd> to generate a skeleton of the module docstring with markdown sections.)
+<div class="alert alert-info">
+
+**Tip:** If you're editing mathlib in VS Code, you can write `m` (and optionally the rest of `module docstring`) and then press <kbd>TAB</kbd> to generate a skeleton of the module docstring with markdown sections.
+
+</div>
 
 New bibliography entries should be added to `docs/references.bib`.
 
