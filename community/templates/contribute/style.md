@@ -116,7 +116,7 @@ Note: the header linter offers a clickable suggestion to format imports accordin
 #### Module docstrings
 
 After the copyright header and the imports, skip (exactly) one line and
-please add a module docstring (delimited with `/-!` and `-/`, which should each be on their own line) containing
+please add a module docstring (delimited with `/-!` and `-/`, which should each be on their own line, but no further blank lines before them) containing
 
 - a title of the file
 - a summary of the contents (the main definitions and theorems, proof techniques, etc…)
@@ -154,6 +154,8 @@ See [Thales600BC] for the original account on Xyzzyology.
 **Tip:** If you're editing mathlib in VS Code, you can write `m` (and optionally the rest of `module docstring`) and then press <kbd>TAB</kbd> to generate a skeleton of the module docstring with markdown sections.
 
 </div>
+
+Also skip (only) one line after the module doc-string.
 
 New bibliography entries should be added to `docs/references.bib`.
 
