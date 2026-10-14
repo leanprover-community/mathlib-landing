@@ -115,7 +115,7 @@ Note: the header linter offers a clickable suggestion to format imports accordin
 
 #### Module docstrings
 
-After the copyright header and the imports,
+After the copyright header and the imports, skip (exactly) one line and
 please add a module docstring (delimited with `/-!` and `-/`, which should each be on their own line) containing
 
 - a title of the file
