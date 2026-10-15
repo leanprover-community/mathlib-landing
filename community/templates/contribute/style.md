@@ -123,6 +123,8 @@ please add a module docstring (delimited with `/-!` and `-/`, which should each 
 - notation that has been used in the file (if any)
 - references to the literature (if any)
 
+Also skip (only) one line after the module doc-string.
+
 In total, the module docstring should look something like this:
 ```markdown
 /-!
@@ -154,8 +156,6 @@ See [Thales600BC] for the original account on Xyzzyology.
 **Tip:** If you're editing mathlib in VS Code, you can write `m` (and optionally the rest of `module docstring`) and then press <kbd>TAB</kbd> to generate a skeleton of the module docstring with markdown sections.
 
 </div>
-
-Also skip (only) one line after the module doc-string.
 
 New bibliography entries should be added to `docs/references.bib`.
 
