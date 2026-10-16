@@ -123,7 +123,7 @@ please add a module docstring (delimited with `/-!` and `-/`, which should each 
 - notation that has been used in the file (if any)
 - references to the literature (if any)
 
-Also skip (only) one line after the module doc-string.
+Also skip (only) one line after the module docstring.
 
 In total, the module docstring should look something like this:
 ```markdown
