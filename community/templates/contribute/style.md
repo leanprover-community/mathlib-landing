@@ -115,13 +115,15 @@ Note: the header linter offers a clickable suggestion to format imports accordin
 
 #### Module docstrings
 
-After the copyright header and the imports,
-please add a module docstring (delimited with `/-!` and `-/`, which should each be on their own line) containing
+After the copyright header and the imports, skip (exactly) one line and
+please add a module docstring (delimited with `/-!` and `-/`, which should each be on their own line, but with no further blank lines surrounding the enclosed text) containing
 
 - a title of the file
 - a summary of the contents (the main definitions and theorems, proof techniques, etc…)
 - notation that has been used in the file (if any)
 - references to the literature (if any)
+
+Also skip (only) one line after the module docstring.
 
 In total, the module docstring should look something like this:
 ```markdown
