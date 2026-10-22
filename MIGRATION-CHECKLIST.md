@@ -3,7 +3,7 @@
 All pages of the original site, as a checklist for deciding page-by-page
 whether it should live on mathlib.org or stay on
 [leanprover-community.github.io](https://leanprover-community.github.io/).
-Synced with the `lean4` branch at `52a665f5` (2026-09-21).
+Synced with the `lean4` branch at `1a73fa0c` (2026-09-28).
 
 A checked box means the page is built by `build.sh` and served at the root
 of mathlib.org. An unchecked one is not built here; links to it point at the
@@ -37,8 +37,10 @@ There are many links between these files so should be migrated together.
 - [x] `contribute/index.html`
 - [x] `contribute/how-to-contribute.html`
 - [x] `contribute/values.html`
-- [x] `contribute/style.html`
-- [x] `contribute/naming.html`
+- [x] `contribute/style.html` — the other site redirects here
+  ([#920](https://github.com/leanprover-community/leanprover-community.github.io/pull/920))
+- [x] `contribute/naming.html` — the other site redirects here
+  ([#920](https://github.com/leanprover-community/leanprover-community.github.io/pull/920))
 - [x] `contribute/doc.html`
 - [x] `contribute/commit.html`
 - [x] `contribute/pr-review.html`
@@ -184,9 +186,11 @@ Pages that must move together, or duplicate a build-time download.
 
 ---
 
-## Blocking deployment
+## Still to do
 
 - `googlef0c00cb4d31b246f.html` — mathlib.org needs its own verification file.
-- Duplicate content — the migrated pages are served by both sites. Held off
-  for now with a site-wide noindex; lifting it (`SITE_NOINDEX=0`) means first
-  deleting them from the other repository or redirecting those URLs here.
+- Duplicate content — the other site still serves its own copy of every
+  checked page not marked as redirecting here. Search engines index both sites
+  and pick one copy of each page to show; redirecting those URLs here settles
+  it. mathlib.org no longer carries a noindex tag, and must not regain one: a
+  redirect to a noindex page drops that page from search results altogether.

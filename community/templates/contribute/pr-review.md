@@ -136,7 +136,7 @@ be something like:
 
 ````markdown
 In case you're unaware, please familiarize yourself with the mathlib
-[style guide](https://leanprover-community.github.io/contribute/style.html).
+[style guide](style.html).
 You need spaces around `*`, `:` at the end of the line and the `rw` to 
 be on the same line.
 ```suggestion
@@ -159,7 +159,7 @@ something like:
 
 ````markdown
 In order to accord with the 
-[naming conventions](https://leanprover-community.github.io/contribute/naming.html)
+[naming conventions](naming.html)
 for mathlib, I suggest renaming this to: `IsUnit.inv_val_mul`. Note that:
 
 - we use `mul` instead of `times`, and `one` instead of `1`
