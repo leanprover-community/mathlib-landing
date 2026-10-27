@@ -15,7 +15,7 @@ Search engines may index every page here. The pages used to carry a `<meta name=
 
 `robots.txt` allows everything. A `Disallow` would not keep a page out of search results in any case: it stops crawlers reading the page, and Google may still list the URL.
 
-`community/` is a copy of that repository's `lean4` branch, last synced at `1a73fa0c`, with these deliberate exceptions:
+`community/` is a copy of that repository's `lean4` branch, last synced at `8ea36328`, with these deliberate exceptions:
 
 - `.github/` is not copied, and neither is `deploy.sh`.
 - `README.md` is this repository's, not that one's, and `robots.txt` and `opensearch.xml` are deleted: `build.sh` writes the former, and the latter pointed browser search at a Lean 3 endpoint that 404s.
@@ -29,7 +29,7 @@ Re-syncing is not a plain overwrite any more, because that would restore the del
 
 ```
 ( cd ../leanprover-community.github.io
-  git diff 1a73fa0c..lean4 -- . ':!.github' ':!deploy.sh' ) | git apply --3way --directory=community
+  git diff 8ea36328..lean4 -- . ':!.github' ':!deploy.sh' ) | git apply --3way --directory=community
 ```
 
 dropping the hunks for files that were deliberately deleted here, and update the commit named above.

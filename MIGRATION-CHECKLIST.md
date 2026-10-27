@@ -3,7 +3,7 @@
 All pages of the original site, as a checklist for deciding page-by-page
 whether it should live on mathlib.org or stay on
 [leanprover-community.github.io](https://leanprover-community.github.io/).
-Synced with the `lean4` branch at `1a73fa0c` (2026-09-28).
+Synced with the `lean4` branch at `8ea36328` (2026-10-27).
 
 A checked box means the page is built by `build.sh` and served at the root
 of mathlib.org. An unchecked one is not built here; links to it point at the
@@ -79,6 +79,7 @@ There are many links between these files so should be migrated together.
   - [ ] `extras/congr.html`
   - [ ] `extras/well_founded_recursion.html`
   - [ ] `extras/speedup.html`
+  - [ ] `extras/module-system-quickstart.html`
 - [ ] `extras/tactic_writing.html`
 - [ ] `did_you_prove_it.html`
 - [ ] `latex.html`
@@ -144,7 +145,8 @@ group. Each breaks if the target moves and the source does not.
 - `contribute/how-to-contribute.html` → `teams/maintainers.html`,
   `teams/reviewers.html`
 - `meet.html` → `contribute/index.html`, `mwe.html`
-- `glossary.html` → `extras/calc.html`, `extras/conv.html`, `extras/simp.html`
+- `glossary.html` → `extras/calc.html`, `extras/conv.html`, `extras/simp.html`,
+  `extras/module-system-quickstart.html`
 - `100.html` → `contribute/index.html`
 - `1000.html` → `contribute/index.html`
 - `install/project.html` → `contribute/index.html`
