@@ -29,12 +29,12 @@
 		  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 	</script>
 
-	<title>{% block title %}{{ title or 'Lean community' }}{% endblock %}</title>
+	<title>{% block title %}{{ title or 'Mathlib' }}{% endblock %}</title>
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-gradient-light d-md-none">
     <div class="d-flex flex-grow-1">
-		<a class="navbar-brand" href="{{ base_url }}index.html">Lean Community
+		<a class="navbar-brand" href="{{ base_url }}index.html">Mathlib
     </a>
     </div>
 
@@ -51,7 +51,7 @@
   </main>
 
     <nav id="navbar" class="d-md-block bg-light sidebar collapse navbar-light pb-4">
-      <div class="d-none d-md-block mt-4"><a class="navbar-brand" href="{{ base_url }}index.html">Lean Community</a></div>
+      <div class="d-none d-md-block mt-4"><a class="navbar-brand" href="{{ base_url }}index.html">Mathlib</a></div>
       {% for menu in menus %}
         <h6 class="sidebar-heading mt-4">{{ menu.title }}</h6>
         <ul class="nav">{% for item in menu.items %}

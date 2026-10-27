@@ -14,8 +14,8 @@ other site by absolute URL.
 ## Front page
 
 - [x] `index.html` — serves as mathlib.org's front page, replacing the old
-  landing page. Still titled "Lean community" and still advertising itself as
-  the community site.
+  landing page. Titled "Mathlib", with an opening paragraph about mathlib
+  rather than Lean; the rest is still the community site's text.
 
 ## Community and teams
 

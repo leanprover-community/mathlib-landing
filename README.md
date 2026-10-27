@@ -22,6 +22,7 @@ Search engines may index every page here. The pages used to carry a `<meta name=
 - The templates and data files for pages that were not migrated are deleted, and `make_site.py` has the code that reads them commented out.
 - `data/menus.yaml` links to the unmigrated pages by absolute URL, and so do the pages that were migrated.
 - `LICENSE` has been copied to the root of this repository, and `templates/cite.md` points there rather than to the other repository's copy.
+- The site is named "Mathlib" rather than "Lean community" in `templates/_base.html`, and the front page introduces mathlib rather than Lean: `templates/index.html` has no community logo, and `data/presentation.md` has its own heading and opening paragraph.
 
 `diff -r` against a checkout of that branch shows exactly how far the two have drifted.
 Re-syncing is not a plain overwrite any more, because that would restore the deleted files; take the upstream diff instead:
@@ -90,5 +91,5 @@ It is used to form every declaration link on `100.html`, `1000.html`, `undergrad
 ## Known gaps
 
 - **Google site verification.** `googlef0c00cb4d31b246f.html` verifies the other site and was not migrated; mathlib.org needs its own.
-- **Branding.** The front page, its title and the sidebar brand still say "Lean community"; the page that said "Mathlib" was the landing page this replaced. Now that the site is indexed, that front page competes in search results with the community site's own.
+- **Front page wording is interim.** Its title, heading and opening paragraph are mathlib's, but the cards and "What is a proof assistant?" below them are still the community site's text, and it has no logo.
 - **`theories.html` is not in the sidebar.** It is built and reachable, but only from `mathlib-overview.html` and `contribute/doc.html`; the sidebar lists the individual theory pages instead.
