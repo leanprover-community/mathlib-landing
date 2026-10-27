@@ -25,14 +25,23 @@ Search engines may index every page here. The pages used to carry a `<meta name=
 - The site is named "Mathlib" rather than "Lean community" in `templates/_base.html`, and the front page introduces mathlib rather than Lean: `templates/index.html` has no community logo, and `data/presentation.md` has its own heading and opening paragraph.
 
 `diff -r` against a checkout of that branch shows exactly how far the two have drifted.
-Re-syncing is not a plain overwrite any more, because that would restore the deleted files; take the upstream diff instead:
+Re-syncing is not a plain overwrite any more, because that would restore the deleted files; apply the upstream diff instead, from the root of this repository with an up-to-date checkout of that one next to it:
 
 ```
-( cd ../leanprover-community.github.io
-  git diff 8ea36328..lean4 -- . ':!.github' ':!deploy.sh' ) | git apply --3way --directory=community
+up=../leanprover-community.github.io base=8ea36328
+# Files upstream added, deleted or renamed: these are left for you to decide on.
+git -C "$up" diff --name-status --diff-filter=m "$base"..lean4 -- . ':!.github' ':!deploy.sh'
+# Upstream's changes to the files that exist here.
+git -C "$up" diff --name-only --diff-filter=M "$base"..lean4 -- . ':!.github' ':!deploy.sh' |
+  while read -r f; do [ -e "community/$f" ] && printf '%s\0' "$f"; done |
+  xargs -0 -r git -C "$up" diff "$base"..lean4 -- |
+  git apply --3way --allow-empty --directory=community
 ```
 
-dropping the hunks for files that were deliberately deleted here, and update the commit named above.
+The second command skips changes to the pages that were not migrated, and leaves conflict markers where a change clashes with one made here, usually an absolute link.
+Of the files the first lists, a new page may belong here; a deleted one is usually a page that moved here and became a redirect upstream, so keep this copy.
+For the same reason, drop any change that points a link at mathlib.org: here it stays relative.
+Then update the commit named above.
 
 ## Building
 
