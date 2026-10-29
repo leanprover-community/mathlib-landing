@@ -1,7 +1,7 @@
 # mathlib.org
 
 This repository builds and deploys <https://mathlib.org>.
-At the moment, the site consists of a subset of pages from [leanprover-community.github.io](https://github.com/leanprover-community/leanprover-community.github.io), served at the root.
+At the moment, the site consists of a subset of pages from [leanprover-community.github.io](https://github.com/leanprover-community/leanprover-community.github.io) (LPC), served at the root.
 
 The sources live in `community/`, and can be compared to the source repo using `diff -r`.
 
@@ -11,21 +11,17 @@ See [MIGRATION-CHECKLIST.md](./MIGRATION-CHECKLIST.md) for a list of pages and t
 
 Currently both sites serve most of the migrated pages. The other site is replacing its copies with redirects here, starting with the style guide and naming conventions in [leanprover-community.github.io#920](https://github.com/leanprover-community/leanprover-community.github.io/pull/920).
 
-Search engines may index every page here. The pages used to carry a `<meta name="robots" content="noindex">` tag while the other copy was the established one, but that cannot coexist with the redirects: Google follows a redirect to its target, and a noindex target drops the page from search results under both URLs. While both copies of a page are still live, search engines pick one of them to show.
-
-`robots.txt` allows everything. A `Disallow` would not keep a page out of search results in any case: it stops crawlers reading the page, and Google may still list the URL.
-
-`community/` is a copy of that repository's `lean4` branch, last synced at `8ea36328`, with these deliberate exceptions:
+`community/` is a copy of the LPC repository's `lean4` branch, last synced at `8ea36328`, with these deliberate exceptions:
 
 - `.github/` is not copied, and neither is `deploy.sh`.
-- `README.md` is this repository's, not that one's, and `robots.txt` and `opensearch.xml` are deleted: `build.sh` writes the former, and the latter pointed browser search at a Lean 3 endpoint that 404s.
+- `README.md` is this repository's, not LPC's, and `robots.txt` and `opensearch.xml` are deleted: `build.sh` writes the former, and the latter pointed browser search at a Lean 3 endpoint that 404s.
 - The templates and data files for pages that were not migrated are deleted, and `make_site.py` has the code that reads them commented out.
 - `data/menus.yaml` links to the unmigrated pages by absolute URL, and so do the pages that were migrated.
 - `LICENSE` has been copied to the root of this repository, and `templates/cite.md` points there rather than to the other repository's copy.
-- The site is named "Mathlib" rather than "Lean community" in `templates/_base.html`, and the front page introduces mathlib rather than Lean: `templates/index.html` has no community logo, and `data/presentation.md` has its own heading and opening paragraph.
+- The site is named "Mathlib" rather than "Lean community" in `templates/_base.html`, and the front page is currently a placeholder where references to Lean have been replaced with mathlib: `templates/index.html` has no community logo, and `data/presentation.md` has its own heading and opening paragraph.
 
-`diff -r` against a checkout of that branch shows exactly how far the two have drifted.
-Re-syncing is not a plain overwrite any more, because that would restore the deleted files; apply the upstream diff instead, from the root of this repository with an up-to-date checkout of that one next to it:
+Re-syncing is not a plain overwrite any more, because that would restore the deleted files.
+The following commands apply the upstream diff instead, from the root of this repository with an up-to-date checkout of that one next to it:
 
 ```
 up=../leanprover-community.github.io base=8ea36328
@@ -38,10 +34,18 @@ git -C "$up" diff --name-only --diff-filter=M "$base"..lean4 -- . ':!.github' ':
   git apply --3way --allow-empty --directory=community
 ```
 
-The second command skips changes to the pages that were not migrated, and leaves conflict markers where a change clashes with one made here, usually an absolute link.
-Of the files the first lists, a new page may belong here; a deleted one is usually a page that moved here and became a redirect upstream, so keep this copy.
+The second command skips changes to the pages that were not migrated, and leaves conflict markers where there are clashes.
+Of the files the first command lists, new pages may belong here, and deleted pages are usually pages that moved here and became a redirect in LPC, so they should be kept in this repo.
 For the same reason, drop any change that points a link at mathlib.org: here it stays relative.
 Then update the commit named above.
+
+### SEO strategy
+
+Search engines may index every page here now that we have removed the `noindex` tags from the pages on this site.
+They were removed because they are incompatible with having redirects from `leanprover-community.github.io` to this page: Google follows a redirect to its target, and a noindex target drops the page from search results under both URLs.
+In the interrim, while both copies of the website pages are live, search engines will pick one of them to show.
+
+`robots.txt` allows everything. A `Disallow` would not keep a page out of search results in any case: it stops crawlers reading the page, and Google may still list the URL.
 
 ## Building
 
@@ -72,7 +76,7 @@ Four optional variables are currently safe to omit, and only the first still cha
 The deploy workflow still passes the latter three in case we decide to migrate those pages later.
 Pull request builds pass only `QUEUEBOARD_REVIEWER_INTERESTS_API_URL`: they run the pull request's own code, so they are not given the Zulip key.
 
-Two more variables control where the build points, `SITE_URL` and `SITE_DOCS_URL`; both are described below.
+`SITE_URL` and `SITE_DOCS_URL` control where the build points and are described below.
 
 `build.sh` unsets `GITHUB_TOKEN`, `MAP_ZULIP_EMAIL` and `MAP_ZULIP_KEY` when they are set but empty, which is what GitHub Actions passes for a secret or variable that has not been configured.
 `make_site.py` tests whether they are present rather than whether they are usable, so without that an unconfigured pair would reach the Zulip API with an empty address and no credentials.
@@ -81,7 +85,9 @@ The map needs both halves because Zulip authenticates with the bot address as th
 
 `MAP_ZULIP_EMAIL` is a repository variable rather than a secret because a bot address is not sensitive, and it has no default in the code deliberately. The original site scrapes with `map-scraper-bot@leanprover.zulipchat.com`, whose key this repository does not hold, and hardcoding that address is precisely what turned an unrelated key into a failed deploy. Point it at whichever bot owns the key in `MAP_ZULIP_KEY`; Zulip shows an address and its key together under the bot in its settings.
 
-The scrape also reads four hardcoded Zulip custom profile field IDs, which are numeric and specific to the `leanprover` realm because Zulip tracks those fields by ID rather than by name. They fail silently rather than loudly: a stale ID drops a user's website and GitHub links, and a stale coordinate field drops that user from the map entirely. If the map ever comes back sparse or empty without an error, check those IDs first.
+The build process also reads four hardcoded Zulip custom profile field IDs, specific to the `leanprover` realm.
+The fetch fails silently rather than loudly: a stale ID drops a user's website and GitHub links, and a stale coordinate field drops that user from the map entirely.
+If the map ever comes back sparse or empty without an error, check those IDs first.
 
 ## Deployment
 
