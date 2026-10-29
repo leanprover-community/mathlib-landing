@@ -56,8 +56,6 @@ defaults, so running `make_site.py` directly needs none of them:
   (default `https://leanprover-community.github.io/mathlib4_docs/`). Every
   declaration link on `100.html`, `1000.html`, `undergrad.html` and
   `mathlib-overview.html` is built from it.
-* `SITE_NOINDEX`: set to `0` to drop the `noindex` meta tag that every page
-  carries while leanprover-community.github.io serves the same pages.
 
 Note that links to the other leanprover-community GitHub Pages sites
 (`mathlib_stats`, `blog`, ...) are deliberately absolute: those are separate
