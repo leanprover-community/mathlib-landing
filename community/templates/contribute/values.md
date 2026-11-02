@@ -56,7 +56,7 @@ Partly for the sake of accessibility, we require human-readable comments (aka "d
 
 ## Implications for PR review
 
-Mathlib changes by merging PRs (pull requests) from contributors. It is largely during review of such PRs that mission alignment is assessed and values are enacted. We provide some comments on this code review process below. In many cases, more detail is available in the [style guide](https://leanprover-community.github.io/contribute/style.html) and the [PR Review Guide](https://leanprover-community.github.io/contribute/pr-review.html).
+Mathlib changes by merging PRs (pull requests) from contributors. It is largely during review of such PRs that mission alignment is assessed and values are enacted. We provide some comments on this code review process below. In many cases, more detail is available in the [style guide](style.html) and the [PR Review Guide](pr-review.html).
 
 ### Please be courteous
 
@@ -64,7 +64,7 @@ Mathlib has a [Code of Conduct](https://github.com/leanprover-community/mathlib4
 
 ### Is the subject matter appropriate?
 
-The first question asked of every contribution is whether the subject matter is within the scope of Mathlib. This is usually easy to answer. See [the contribution guidelines](https://leanprover-community.github.io/contribute/index.html#what-to-contribute-to-mathlib) for further remarks.
+The first question asked of every contribution is whether the subject matter is within the scope of Mathlib. This is usually easy to answer. See [the contribution guidelines](index.html#what-to-contribute-to-mathlib) for further remarks.
 
 ### Is the author a human?
 
@@ -98,7 +98,7 @@ Longer proof scripts (50+ lines) should make an effort to sketch the shape of th
 
 ### Is the naming correct?
 
-Mathlib follows a naming scheme described in the [naming conventions](https://leanprover-community.github.io/contribute/naming.html). We try to enforce this during review.
+Mathlib follows a naming scheme described in the [naming conventions](naming.html). We try to enforce this during review.
 
 ### Is the code performant?
 
