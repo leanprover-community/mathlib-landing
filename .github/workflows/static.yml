@@ -48,7 +48,7 @@ jobs:
       - name: Install bibtool
         run: |
           sudo apt-get update --fix-missing
-          sudo apt-get install -y bibtool
+          sudo apt-get install -y --no-install-recommends bibtool
 
       - name: Install Python dependencies
         run: python -m pip install --upgrade pip -r community/requirements.txt
