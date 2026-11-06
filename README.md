@@ -9,7 +9,8 @@ The sources live in `community/`, and can be compared to the source repo using `
 
 See [MIGRATION-CHECKLIST.md](./MIGRATION-CHECKLIST.md) for a list of pages and their status in this repo.
 
-Currently both sites serve most of the migrated pages. The other site is replacing its copies with redirects here, starting with the style guide and naming conventions in [leanprover-community.github.io#920](https://github.com/leanprover-community/leanprover-community.github.io/pull/920).
+Currently both sites serve most of the migrated pages. The other site is replacing its copies with redirects here in batches, starting with the eleven pages that no open PR there touches, in [leanprover-community.github.io#940](https://github.com/leanprover-community/leanprover-community.github.io/pull/940), and the style guide and naming conventions in [leanprover-community.github.io#920](https://github.com/leanprover-community/leanprover-community.github.io/pull/920).
+The other pages will follow once the open PRs that edit them there are dealt with.
 
 `community/` is a copy of the LPC repository's `lean4` branch, last synced at `837dbf67`, with these deliberate exceptions:
 
