@@ -3,7 +3,7 @@
 All pages of the original site, as a checklist for deciding page-by-page
 whether it should live on mathlib.org or stay on
 [leanprover-community.github.io](https://leanprover-community.github.io/).
-Synced with the `lean4` branch at `8ea36328` (2026-10-27).
+Synced with the `lean4` branch at `837dbf67` (2026-11-05).
 
 A checked box means the page is built by `build.sh` and served at the root
 of mathlib.org. An unchecked one is not built here; links to it point at the
