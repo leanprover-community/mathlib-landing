@@ -11,7 +11,7 @@ See [MIGRATION-CHECKLIST.md](./MIGRATION-CHECKLIST.md) for a list of pages and t
 
 Currently both sites serve most of the migrated pages. The other site is replacing its copies with redirects here, starting with the style guide and naming conventions in [leanprover-community.github.io#920](https://github.com/leanprover-community/leanprover-community.github.io/pull/920).
 
-`community/` is a copy of the LPC repository's `lean4` branch, last synced at `8ea36328`, with these deliberate exceptions:
+`community/` is a copy of the LPC repository's `lean4` branch, last synced at `837dbf67`, with these deliberate exceptions:
 
 - `.github/` is not copied, and neither is `deploy.sh`.
 - `README.md` is this repository's, not LPC's, and `robots.txt` and `opensearch.xml` are deleted: `build.sh` writes the former, and the latter pointed browser search at a Lean 3 endpoint that 404s.
@@ -24,7 +24,7 @@ Re-syncing is not a plain overwrite any more, because that would restore the del
 The following commands apply the upstream diff instead, from the root of this repository with an up-to-date checkout of that one next to it:
 
 ```
-up=../leanprover-community.github.io base=8ea36328
+up=../leanprover-community.github.io base=837dbf67
 # Files upstream added, deleted or renamed: these are left for you to decide on.
 git -C "$up" diff --name-status --diff-filter=m "$base"..lean4 -- . ':!.github' ':!deploy.sh'
 # Upstream's changes to the files that exist here.
