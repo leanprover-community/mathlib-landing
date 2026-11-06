@@ -27,16 +27,26 @@ The following commands apply the upstream diff instead, from the root of this re
 up=../leanprover-community.github.io base=837dbf67
 # Files upstream added, deleted or renamed: these are left for you to decide on.
 git -C "$up" diff --name-status --diff-filter=m "$base"..lean4 -- . ':!.github' ':!deploy.sh'
-# Upstream's changes to the files that exist here.
+# Upstream's changes to the files that exist here, except pages that became redirects to here.
 git -C "$up" diff --name-only --diff-filter=M "$base"..lean4 -- . ':!.github' ':!deploy.sh' |
-  while read -r f; do [ -e "community/$f" ] && printf '%s\0' "$f"; done |
+  while read -r f; do
+    [ -e "community/$f" ] || continue
+    if git -C "$up" show "lean4:$f" | grep -q 'rel="canonical" href="https://mathlib.org/'; then
+      echo "skipped, now a redirect to mathlib.org: $f" >&2
+      continue
+    fi
+    printf '%s\0' "$f"
+  done |
   xargs -0 -r git -C "$up" diff "$base"..lean4 -- |
   git apply --3way --allow-empty --directory=community
 ```
 
-The second command skips changes to the pages that were not migrated, and leaves conflict markers where there are clashes.
+The second command leaves conflict markers where there are clashes.
+It skips changes to the pages that were not migrated, and to the pages LPC has replaced in place with a redirect to this site, which it names.
 Of the files the first command lists, new pages may belong here, and deleted pages are usually pages that moved here and became a redirect in LPC, so they should be kept in this repo.
+Their redirects are listed as added, and should be skipped.
 For the same reason, drop any change that points a link at mathlib.org: here it stays relative.
+Likewise keep the sidebar's "Licence" item in `data/menus.yaml` as `cite.html#Licence`, which LPC points at its own `LICENSE`.
 Then update the commit named above.
 
 ### SEO strategy
