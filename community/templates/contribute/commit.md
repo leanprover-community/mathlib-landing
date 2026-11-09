@@ -4,16 +4,20 @@ We are using the following convention for writing pull request titles and descri
 
 ## Format
 
-Note: "Title:" and "Description:" do not actually appear
+The PR title will become the first line of the commit message. It should have the following format:
 
 ```markdown
   Title:
   <type>(<optional-scope>): <subject>
+```
 
-  Description:
+The PR description, before any `---`, will be appended to the commit message when the PR is merged. It should have the following format:
+```markdown
   <body>
   <NEWLINE>
   <footer>
+  <NEWLINE>
+  ---
   <NEWLINE>
   <dependencies>
 ```
