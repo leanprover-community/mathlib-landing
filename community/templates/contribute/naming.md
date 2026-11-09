@@ -389,12 +389,10 @@ order. For example, the theorem `A → B → C` would be named
 
 Sometimes abbreviations or alternative descriptions are easier to work
 with. For example, we use `pos`, `neg`, `nonpos`, `nonneg` rather than
-`zero_lt`, `lt_zero`, `le_zero`, and `zero_le`.
-
-For a nonzero quantity, use `ne_zero` for `_ ≠ 0` or `zero_ne` for
-`0 ≠ _` respectively (although the former is generally the preferred
-form for theorems), rather than `nonzero`. Use `neZero` specifically
-to refer to the `NeZero` typeclass.
+`zero_lt`, `lt_zero`, `le_zero`, and `zero_le`. Note that we do not
+use `nonzero` in place of `ne_zero` or `zero_ne`. Also note that,
+following the general naming convention, `neZero` specifically
+refers to the `NeZero` typeclass.
 
 ```lean
 import Mathlib.RingTheory.FractionalIdeal.Inverse
