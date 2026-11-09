@@ -113,6 +113,10 @@ import all Lean.Syntax
 
 Note: the header linter offers a clickable suggestion to format imports according to the style convention.
 
+Try to minimize imports: the `#min_imports` command (you can run this anywhere in the file) can help you with this.
+We also try to avoid transitive imports; the `#norm_imports` command can you help with this.
+Don't worry too much about the last two points; imports are automatically minimized regularly (by the `shake` tool).
+
 #### Module docstrings
 
 After the copyright header and the imports, skip (exactly) one line and
