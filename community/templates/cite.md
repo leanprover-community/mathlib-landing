@@ -14,7 +14,7 @@ Both the mathlib library and this website are distributed under open-source lice
 
 ```bibtex
 @inproceedings{mathlib2020,
-  author = {The mathlib {C}ommunity},
+  author = {{The mathlib Community}},
   title = {The {L}ean {M}athematical {L}ibrary},
   booktitle = {Proceedings of the 9th {ACM} {SIGPLAN} {I}nternational
                {C}onference on {C}ertified {P}rograms and {P}roofs},
