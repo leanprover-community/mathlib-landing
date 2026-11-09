@@ -389,11 +389,13 @@ order. For example, the theorem `A → B → C` would be named
 
 Sometimes abbreviations or alternative descriptions are easier to work
 with. For example, we use `pos`, `neg`, `nonpos`, `nonneg` rather than
-`zero_lt`, `lt_zero`, `le_zero`, and `zero_le`.
+`zero_lt`, `lt_zero`, `le_zero`, and `zero_le`. Note that we do not
+use `nonzero` in place of `ne_zero` or `zero_ne`. Also note that,
+following the general naming convention, `neZero` specifically
+refers to the `NeZero` typeclass.
 
 ```lean
-import Mathlib.Algebra.Order.Monoid.Lemmas
-import Mathlib.Algebra.Order.Ring.Lemmas
+import Mathlib.RingTheory.FractionalIdeal.Inverse
 
 open Nat
 
@@ -401,6 +403,8 @@ open Nat
 #check mul_nonpos_of_nonneg_of_nonpos
 #check add_lt_of_lt_of_nonpos
 #check add_lt_of_nonpos_of_lt
+#check pos_of_ne_zero
+#check FractionalIdeal.inv_of_ne_zero
 ```
 
 These conventions are not perfect. They cannot distinguish compound
