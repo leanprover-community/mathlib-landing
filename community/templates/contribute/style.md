@@ -422,8 +422,6 @@ We make an exception to this rule for several basic `structure`s: for example, a
 * [`PSigma`](https://leanprover-community.github.io/mathlib4_docs/Init/Core.html#PSigma)
 * [`And`](https://leanprover-community.github.io/mathlib4_docs/Init/Prelude.html#And)
 * [`Iff`](https://leanprover-community.github.io/mathlib4_docs/Init/Core.html#Iff)
-* [`Subtype`](https://leanprover-community.github.io/mathlib4_docs/Init/Prelude.html#Subtype)
-* [`Fin`](https://leanprover-community.github.io/mathlib4_docs/Init/Prelude.html#Fin)
 
 Users willing to define a new structure allowing its projections to be labelled numerically, hence disabling the linter for the structure at hand, can do so by adding the attribute `@[allow_numeric_proj]` to their definition, as in
 ```lean
