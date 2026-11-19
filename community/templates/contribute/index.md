@@ -53,10 +53,13 @@ and it may take time for mathlib contributions to be reviewed and merged.
 
 ### Style changes
 
-`mathlib` has a [style guide](style.html) and PRs fixing
-style violations documented in this guide are welcome. Other stylistic PRs that don't have explicit
-approval by the authors of the affected files may be closed. We invite authors to instead discuss the proposed
-change on Zulip and, when significant consensus among reviewers is reached, to open a PR to the style guide.
+`mathlib` has a [style guide](style.html) and PRs fixing style violations documented in this guide are welcome.
+We also accept PRs with stylistic-only changes if there is code for applying this change automatically, and/or a linter that rejects the old version.
+Making style improvements in passing while editing the same file for a meaningful change is also fine. Otherwise, style-only PRs may be closed to converse mathlib's scarce review capacity.
+We invite authors to instead discuss the proposed change on Zulip and, when significant consensus among reviewers is reached, to open a PR to the style guide.
+
+PRs that "golf" proofs by using a more powerful tactic or similar do not fall under this exact rule, but reviewing them has to be balanced with reviewing feature contributions, major refactorings, etc.
+
 
 ## Use of AI
 
